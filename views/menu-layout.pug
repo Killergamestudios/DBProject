@@ -1,0 +1,52 @@
+extends layout
+
+block menu
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    div.collapse.navbar-collapse
+      ul.navbar-nav
+        li.nav-item
+          span.nav-link Home
+        li.nav-item.dropdown 
+          span.nav-link.dropdown-toggle Edit Library Data
+          div.dropdown-menu
+            div.dropdown-item
+              span.nav-link Books
+              div.dropdown-submenu
+                div.dropdown-item
+                  a.nav-link(href="#") Update
+                div.dropdown-item
+                  a.nav-link(href="#") Insert
+                div.dropdown-item
+                  a.nav-link(href="#") Delete
+            div.dropdown-item
+              span.nav-link Employees
+              div.dropdown-submenu
+                div.dropdown-item
+                  a.nav-link(href="#") Update
+                div.dropdown-item
+                  a.nav-link(href="#") Insert
+                div.dropdown-item
+                  a.nav-link(href="#") Delete
+            div.dropdown-item
+              span.nav-link Publishers
+              div.dropdown-submenu
+                div.dropdown-item
+                  a.nav-link(href="#") Update
+                div.dropdown-item
+                  a.nav-link(href="#") Insert
+                div.dropdown-item
+                  a.nav-link(href="#") Delete
+        li.nav-item.dropdown
+          span.nav-link.dropdown-toggle View
+          div.dropdown-menu
+            div.dropdown-item
+              a.nav-link(href="#") View 1
+            div.dropdown-item
+              a.nav-link(href="#") View 2
+        li.nav-item.dropdown
+          span.nav-link.dropdown-toggle Explore
+          div.dropdown-menu
+            div.dropdown-item
+              a.nav-link(href="#") Explore 1
+            div.dropdown-item
+              a.nav-link(href="#") Explore 2

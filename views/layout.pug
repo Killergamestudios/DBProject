@@ -3,5 +3,12 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  body(class=bodyClass)
+    block logo
+      div.logo
+        img(src="/images/kgs.png", alt="KGS Logo")
+    div.main-container
+      block menu
+      block content
