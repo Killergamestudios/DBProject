@@ -5,8 +5,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 
+// Editable!!
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var booksUpdateRouter = require('./routes/books');
+// Editable!!
 
 var app = express();
 
@@ -24,8 +26,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Add js file to route
+// Editable!!
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/books', booksUpdateRouter);
+// Editable!!
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

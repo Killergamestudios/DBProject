@@ -5,7 +5,7 @@ block menu
     div.collapse.navbar-collapse
       ul.navbar-nav
         li.nav-item
-          span.nav-link Home
+          a.nav-link(href="/") Home
         li.nav-item.dropdown 
           span.nav-link.dropdown-toggle Edit Library Data
           div.dropdown-menu
@@ -13,7 +13,7 @@ block menu
               span.nav-link Books
               div.dropdown-submenu
                 div.dropdown-item
-                  a.nav-link(href="#") Update
+                  a.nav-link(href="/books/update") Update
                 div.dropdown-item
                   a.nav-link(href="#") Insert
                 div.dropdown-item
