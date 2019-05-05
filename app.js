@@ -8,6 +8,7 @@ var logger = require('morgan');
 // Editable!!
 var indexRouter = require('./routes/index');
 var booksUpdateRouter = require('./routes/books');
+var publisherUpdateRouter = require('./routes/publisher');
 // Editable!!
 
 var app = express();
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Editable!!
 app.use('/', indexRouter);
 app.use('/books', booksUpdateRouter);
+app.use('/publisher',publisherUpdateRouter);
 // Editable!!
 
 // catch 404 and forward to error handler

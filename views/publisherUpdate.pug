@@ -1,0 +1,17 @@
+extends menu-layout
+
+block content
+  div.container
+    form(action="/publisher/update", method="post")
+      input(type="text", name="Pname", placeholder="Publisher Name")
+      input(type="text", name="Year",placeholder="Establisment Year")
+      input(type="text", name="Street",placeholder="Address Street")
+      input(type="text", name="Number",placeholder="Address Number")
+      input(type="text", name="Pcode",placeholder="PostalCode")
+      //input(type="checkbox", name="new")
+      //select(name="publishers")
+        option(value="Choose Your Destiny..." selected) Choose Your Destiny...
+        option(value="Josephkhland") Josephkhland
+        option(value="Panloul") Panloul
+        option(value="Hulk") Hulk
+      input(type="submit", value="Submit")
