@@ -1,0 +1,99 @@
+Member (
+    memberID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+    MFirst TEXT(30) CHARACTER SET utf8, 
+    MLast TEXT(30) CHARACTER SET utf8, 
+    Street TEXT(30) CHARACTER SET utf8, 
+    Number INT(4) UNSIGNED, 
+    PostalCode TEXT(5), 
+    MBirthDate DATE
+);
+
+Book (
+    ISBN VARCHAR(13) PRIMARY KEY, 
+    Title TEXT CHARACTER SET utf8, 
+    PubYear YEAR(4), 
+    NumPages INT(5) UNSIGNED, 
+    PubName TEXT(50) CHARACTER SET utf8
+);
+
+Author (
+    authID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    AFirst TEXT(30) CHARACTER SET utf8,
+    ALast TEXT(30) CHARACTER SET utf8,
+    ABirthDate Date
+);
+INSERT INTO Author (AFirst, ALast, ABirthDate) VALUES ('Stan','Lee','1922-12-28');
+
+WrittenBy (
+    ISBN VARCHAR(13),
+    authID INT(7) UNSIGNED,
+    PRIMARY KEY(ISBN, authID)
+);
+
+Category (
+    categoryName VARCHAR(30) CHARACTER SET utf8 PRIMARY KEY,
+    superCategoryName TEXT(30) CHARACTER SET utf8
+);
+INSERT INTO Category (categoryName, superCategoryName) VALUES ('Manga', 'Comic book');
+
+BelongTo (
+    ISBN VARCHAR(13),
+    catagoryName VARCHAR(30) CHARACTER SET utf8,
+    PRIMARY KEY(ISBN, catagoryName)
+);
+
+Publisher (
+    pubName VARCHAR(50) CHARACTER SET utf8,
+    estYear YEAR(4),
+    Street TEXT(30) CHARACTER SET utf8,
+    Number INT(4) UNSIGNED,
+    PostalCode TEXT(5)
+);
+
+INSERT INTO Publisher (pubName, estYear, Street, Number, PostalCode)
+VALUES ('Ζάχος', '1942', 'Πολυτεχνείου', 42, '17742');
+
+Copies (
+    ISBN VARCHAR(13),
+    copyNr INT(2) UNSIGNED,
+    shelf INT(4) UNSIGNED,
+    PRIMARY KEY(ISBN, copyNr)
+);
+
+Employee (
+    empID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    EFirst TEXT(30) CHARACTER SET utf8,
+    ELast TEXT(30) CHARACTER SET utf8,
+    Salary INT(4) UNSIGNED
+);  
+
+PermanentEmployee (
+    empID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    HiringDate DATE
+);
+
+TemporaryEmployee (
+    empID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    ContractNr INT(10) UNSIGNED
+);
+
+Borrows (
+    memberID INT(7) UNSIGNED, 
+    ISBN VARCHAR(13), 
+    copyNr INT(2) UNSIGNED, 
+    dateOfBorrowing DATE, 
+    dateOfReturn DATE,
+    PRIMARY KEY (memberID, ISBN, copyNr, dateOfBorrowing)
+);
+
+
+
+Reminder (
+    empId INT(7) UNSIGNED,
+    memberId INT(7) UNSIGNED,
+    ISBN VARCHAR(13),
+    copyNr INT(2) UNSIGNED,
+    dateOfBorrowing DATE,
+    dateOfReminder DATE
+    PRIMARY KEY (empId, memberID, ISBN, copyNr, dateOfBorrowing)
+);
