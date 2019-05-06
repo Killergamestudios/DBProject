@@ -1,8 +1,3 @@
-ALTER TABLE TemporaryEmployee
-ADD FOREIGN KEY (empID) REFERENCES TemporaryEmployee(empID);
-
-ALTER TABLE Category MODIFY superCategoryName VARCHAR(30) CHARACTER SET utf8;
-
 Member (
     memberID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
     MFirst TEXT(30) CHARACTER SET utf8, 
