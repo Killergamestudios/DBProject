@@ -7,14 +7,22 @@ Member (
     PostalCode TEXT(5), 
     MBirthDate DATE
 );
+INSERT INTO Member (MFirst, MLast, Street, Number, PostalCode, MBirthDate)
+VALUES ('Μιχαήλ','Θοδώρου','Μουσικής',12,'12345','1998-05-04');
 
 Book (
     ISBN VARCHAR(13) PRIMARY KEY, 
     Title TEXT CHARACTER SET utf8, 
     PubYear YEAR(4), 
     NumPages INT(5) UNSIGNED, 
-    PubName TEXT(50) CHARACTER SET utf8
+    pubName VARCHAR(50) CHARACTER SET utf8 FOREIGN KEY REFERENCES Publisher(pubName);
 );
+INSERT INTO Book (ISBN, Title, PubYear, NumPages, PubName)
+VALUES ('9031686234786','Η Μαγεία της Φυσικής', 2008, 1100, 'Παπασωτηρίου');
+
+UPDATE Book
+SET pubName = 'Τζιόλα'
+WHERE pubName = 'Τζιόλας';
 
 Author (
     authID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -29,25 +37,29 @@ WrittenBy (
     authID INT(7) UNSIGNED,
     PRIMARY KEY(ISBN, authID)
 );
+INSERT INTO WrittenBy (ISBN, authID) VALUES ('9024686134986',7);
 
 Category (
     categoryName VARCHAR(30) CHARACTER SET utf8 PRIMARY KEY,
-    superCategoryName TEXT(30) CHARACTER SET utf8
+    superCategoryName VARCHAR(30) CHARACTER SET utf8,
+    FOREIGN KEY (superCategoryName) REFERENCES Category(categoryName)
 );
 INSERT INTO Category (categoryName, superCategoryName) VALUES ('Manga', 'Comic book');
 
 BelongTo (
     ISBN VARCHAR(13),
-    catagoryName VARCHAR(30) CHARACTER SET utf8,
-    PRIMARY KEY(ISBN, catagoryName)
+    categoryName VARCHAR(30) CHARACTER SET utf8,
+    PRIMARY KEY(ISBN, categoryName)
 );
+INSERT INTO BelongTo (ISBN, categoryName) VALUES ('9034686234786','Action and Adventure');
 
 Publisher (
     pubName VARCHAR(50) CHARACTER SET utf8,
     estYear YEAR(4),
     Street TEXT(30) CHARACTER SET utf8,
     Number INT(4) UNSIGNED,
-    PostalCode TEXT(5)
+    PostalCode TEXT(5),
+    PRIMARY KEY (pubName)
 );
 
 INSERT INTO Publisher (pubName, estYear, Street, Number, PostalCode)
@@ -57,8 +69,11 @@ Copies (
     ISBN VARCHAR(13),
     copyNr INT(2) UNSIGNED,
     shelf INT(4) UNSIGNED,
-    PRIMARY KEY(ISBN, copyNr)
+    PRIMARY KEY(ISBN, copyNr),
+    FOREIGN KEY (ISBN) REFERENCES Book(ISBN)
 );
+INSERT INTO Copies (ISBN,copyNr,shelf) VALUES ('8031686234786','1','1');
+INSERT INTO Copies (ISBN,copyNr,shelf) VALUES ('9031686234786','2','1');
 
 Employee (
     empID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -67,15 +82,26 @@ Employee (
     Salary INT(4) UNSIGNED
 );  
 
+INSERT INTO Employee (EFirst, ELast, Salary)
+VALUES ('John','Cena','7000');
+
 PermanentEmployee (
-    empID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    HiringDate DATE
+    empID INT(7) UNSIGNED PRIMARY KEY,
+    HiringDate DATE,
+    FOREIGN KEY (empID) REFERENCES Employee(empID)
 );
 
+INSERT INTO PermanentEmployee (empID, HiringDate)
+VALUES ('6','206-10-01');
+
 TemporaryEmployee (
-    empID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    ContractNr INT(10) UNSIGNED
+    empID INT(7) UNSIGNED PRIMARY KEY,
+    ContractNr INT(10) UNSIGNED,
+    FOREIGN KEY (empID) REFERENCES Employee(empID)
 );
+
+INSERT INTO TemporaryEmployee (empID, ContractNr)
+VALUES ('10','189795413');
 
 Borrows (
     memberID INT(7) UNSIGNED, 
@@ -83,17 +109,28 @@ Borrows (
     copyNr INT(2) UNSIGNED, 
     dateOfBorrowing DATE, 
     dateOfReturn DATE,
-    PRIMARY KEY (memberID, ISBN, copyNr, dateOfBorrowing)
+    PRIMARY KEY (memberID, ISBN, copyNr, dateOfBorrowing),
+    FOREIGN KEY (ISBN,copyNr) REFERENCES Copies(ISBN, copyNr),
+    FOREIGN KEY (memberID) REFERENCES Member(memberID)
 );
 
-
+INSERT INTO Borrows (memberID, ISBN, copyNr, dateOfBorrowing, dateOfReturn)
+VALUES ('2', '9034686234786','2','2019-04-01',NULL);
 
 Reminder (
-    empId INT(7) UNSIGNED,
-    memberId INT(7) UNSIGNED,
+    empID INT(7) UNSIGNED,
+    memberID INT(7) UNSIGNED,
     ISBN VARCHAR(13),
     copyNr INT(2) UNSIGNED,
     dateOfBorrowing DATE,
-    dateOfReminder DATE
-    PRIMARY KEY (empId, memberID, ISBN, copyNr, dateOfBorrowing)
+    dateOfReminder DATE,
+    PRIMARY KEY (empID, memberID, ISBN, copyNr, dateOfBorrowing, dateOfReminder),
+    FOREIGN KEY (empID) REFERENCES Employee(empID),
+    FOREIGN KEY (memberID) REFERENCES Member(memberID),
+    FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
+    FOREIGN KEY (memberID,ISBN,copyNr,dateOfBorrowing) REFERENCES Borrows(memberID,ISBN,copyNr,dateOfBorrowing),
+    FOREIGN KEY (ISBN,copyNr) REFERENCES Copies(ISBN, copyNr)
 );
+
+INSERT INTO Reminder (empID, memberID, ISBN, copyNr, dateOfBorrowing, dateOfReminder)
+VALUES ('1','1','9031686234786','1','2017-01-01','2017-01-20');
