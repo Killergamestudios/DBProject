@@ -1,13 +1,37 @@
 extends menu-layout
 
 block content
+  h1 Books Update
   div.container
     form(action="/books/update", method="post")
-      
-      select(name="book")
-        option(value="" selected) --Choose book to edit--
-        each book in books
-          option(value=book.ISBN) #{book.ISBN}, #{book.Title}, #{book.NumPages} σελ, εκδ #{book.pubName}, #{book.PubYear}  
-      input(type="text", name="title", placeholder="Book Title")
-      input(type="checkbox", name="new")
-      input(type="submit", value="Submit")
+      div.form-group
+        select.form-control(name="book")
+          option(value="" selected) -- Choose book to edit --
+          each book in books
+            option(value=book.ISBN) #{book.ISBN}, #{book.Title}, #{book.NumPages} σελ, εκδ #{book.pubName}, #{book.PubYear}  
+      div.form-group
+        input.form-control#ISBN(type="text", name="ISBN", placeholder=" ", pattern="^$|[0-9]{13}", 
+          oninvalid="setCustomValidity('Must be 13 Numerical characters')",
+          onchange="try{setCustomValidity('')}catch(e){}")
+        label.form-control-placeholder(for="ISBN") ISBN
+        if error.message == 'ISBN_ALREADY_EXISTS'
+          small.alert-danger.form-text ISBN #{error.value} alreaedy exists
+      div.form-group
+        input.form-control#Title(type="text", name="Title", placeholder=" ")
+        label.form-control-placeholder(for="Title") Book Title
+      div.form-group
+        input.form-control#NumPages.form-number(type="number", name="NumPages", min="0", max="10000", placeholder=" ")
+        label.form-control-placeholder(for="NumPages") Number of Pages
+        small.form-text.text-muted Can be from 0 to 10000
+      div.form-group
+        select#pubName.form-control(name="pubName")
+          option(value="" selected) -- Choose publisher --
+          each publisher in publishers
+            option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, 
+              | #{publisher.Street} #{publisher.Number}, #{publisher.PostalCode}
+      div.form-group
+        input#pubYear.form-control(type="number", name="pubYear", min="0", max="2019", placeholder=" ")
+        label.form-control-placeholder(for="pubYear") Year of Publication
+        small.form-text.text-muted Can be from 0 to 2019
+      div.form-group
+        input.form-control(type="submit", value="Submit")

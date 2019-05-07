@@ -80,7 +80,7 @@ CREATE TABLE `Book` (
   `pubName` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`ISBN`),
   KEY `pubName` (`pubName`),
-  CONSTRAINT `Book_ibfk_1` FOREIGN KEY (`pubName`) REFERENCES `Publisher` (`pubName`)
+  CONSTRAINT `Book_ibfk_1` FOREIGN KEY (`pubName`) REFERENCES `Publisher` (`pubName`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -90,7 +90,7 @@ CREATE TABLE `Book` (
 
 LOCK TABLES `Book` WRITE;
 /*!40000 ALTER TABLE `Book` DISABLE KEYS */;
-INSERT INTO `Book` VALUES ('9024586134986','Μαθηματική Ανάλυση Ι',2017,1100,'Τσότρας'),('9024686134986','Μαθηματική Ανάλυση ΙI',2017,750,'Τσότρας'),('9024686234786','Ηλεκτρομαγνητικά Πεδία ΙΙ',2016,1000,'Τζιόλα'),('9024686234986','Ηλεκτρομαγνητικά Πεδία Ι',2016,1000,'Τζιόλα'),('9031686234786','Η Μαγεία της Φυσικής',2008,1100,'Παπασωτηρίου'),('9034686234786','Περιπέτειες της Arjumand',2019,100,'Ζάχος');
+INSERT INTO `Book` VALUES ('9024586134986','Μαθηματική Ανάλυση Ι',2017,800,'Τσότρας'),('9024686134986','Μαθηματική Ανάλυση ΙI',2017,750,'Τσότρας'),('9024686234786','Ηλεκτρομαγνητικά Πεδία ΙΙ',2016,1000,'Τζιόλα'),('9024686234986','Ηλεκτρομαγνητικά Πεδία Ι',2016,1000,'Τζιόλα'),('9031686234786','Η Μαγεία της Φυσικής',2008,1100,'Παπασωτηρίου'),('9034686234786','Περιπέτειες της Arjumand',2019,100,'Ζάχος');
 /*!40000 ALTER TABLE `Book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,8 +109,8 @@ CREATE TABLE `Borrows` (
   `dateOfReturn` date DEFAULT NULL,
   PRIMARY KEY (`memberID`,`ISBN`,`copyNr`,`dateOfBorrowing`),
   KEY `ISBN` (`ISBN`,`copyNr`),
-  CONSTRAINT `Borrows_ibfk_1` FOREIGN KEY (`ISBN`, `copyNr`) REFERENCES `Copies` (`ISBN`, `copyNr`),
-  CONSTRAINT `Borrows_ibfk_2` FOREIGN KEY (`memberID`) REFERENCES `Member` (`memberID`)
+  CONSTRAINT `Borrows_ibfk_1` FOREIGN KEY (`ISBN`, `copyNr`) REFERENCES `Copies` (`ISBN`, `copyNr`) ON UPDATE CASCADE,
+  CONSTRAINT `Borrows_ibfk_2` FOREIGN KEY (`memberID`) REFERENCES `Member` (`memberID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,7 +136,7 @@ CREATE TABLE `Category` (
   `superCategoryName` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`categoryName`),
   KEY `superCategoryName` (`superCategoryName`),
-  CONSTRAINT `Category_ibfk_1` FOREIGN KEY (`superCategoryName`) REFERENCES `Category` (`categoryName`)
+  CONSTRAINT `Category_ibfk_1` FOREIGN KEY (`superCategoryName`) REFERENCES `Category` (`categoryName`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -162,7 +162,7 @@ CREATE TABLE `Copies` (
   `copyNr` int(2) unsigned NOT NULL,
   `shelf` int(4) unsigned DEFAULT NULL,
   PRIMARY KEY (`ISBN`,`copyNr`),
-  CONSTRAINT `Copies_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`)
+  CONSTRAINT `Copies_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -242,7 +242,7 @@ CREATE TABLE `PermanentEmployee` (
   `empID` int(7) unsigned NOT NULL,
   `HiringDate` date DEFAULT NULL,
   PRIMARY KEY (`empID`),
-  CONSTRAINT `PermanentEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`)
+  CONSTRAINT `PermanentEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -300,11 +300,11 @@ CREATE TABLE `Reminder` (
   PRIMARY KEY (`empID`,`memberID`,`ISBN`,`copyNr`,`dateOfBorrowing`,`dateOfReminder`),
   KEY `memberID` (`memberID`,`ISBN`,`copyNr`,`dateOfBorrowing`),
   KEY `ISBN` (`ISBN`,`copyNr`),
-  CONSTRAINT `Reminder_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`),
-  CONSTRAINT `Reminder_ibfk_2` FOREIGN KEY (`memberID`) REFERENCES `Member` (`memberID`),
-  CONSTRAINT `Reminder_ibfk_3` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`),
-  CONSTRAINT `Reminder_ibfk_4` FOREIGN KEY (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`) REFERENCES `Borrows` (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`),
-  CONSTRAINT `Reminder_ibfk_5` FOREIGN KEY (`ISBN`, `copyNr`) REFERENCES `Copies` (`ISBN`, `copyNr`)
+  CONSTRAINT `Reminder_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON UPDATE CASCADE,
+  CONSTRAINT `Reminder_ibfk_2` FOREIGN KEY (`memberID`) REFERENCES `Member` (`memberID`) ON UPDATE CASCADE,
+  CONSTRAINT `Reminder_ibfk_3` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`) ON UPDATE CASCADE,
+  CONSTRAINT `Reminder_ibfk_4` FOREIGN KEY (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`) REFERENCES `Borrows` (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`) ON UPDATE CASCADE,
+  CONSTRAINT `Reminder_ibfk_5` FOREIGN KEY (`ISBN`, `copyNr`) REFERENCES `Copies` (`ISBN`, `copyNr`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -329,7 +329,7 @@ CREATE TABLE `TemporaryEmployee` (
   `empID` int(7) unsigned NOT NULL,
   `ContractNr` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`empID`),
-  CONSTRAINT `TemporaryEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`)
+  CONSTRAINT `TemporaryEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -376,4 +376,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-07 22:02:45
+-- Dump completed on 2019-05-06 20:01:50
