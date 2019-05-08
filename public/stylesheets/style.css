@@ -125,6 +125,13 @@ form .form-group input {
   background: none;
 }
 
+form span.alert-danger {
+  width: 100%;
+  display: block;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
 /* -- Floating Labels -- */
 .form-group {
   position: relative;

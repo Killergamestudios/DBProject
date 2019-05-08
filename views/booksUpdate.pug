@@ -4,6 +4,8 @@ block content
   h1 Books Update
   div.container
     form(action="/books/update", method="post")
+      if error.messages
+        span.alert-danger Something went wrong with the submission.
       div.form-group
         select.form-control(name="book")
           option(value="" selected) -- Choose book to edit --

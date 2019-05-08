@@ -4,6 +4,8 @@ block content
   h1 publisher update
   div.container
     form(action="/publisher/update", method="post")
+      if error.messages
+        span.alert-danger Something went wrong with the submission.
       div.form-group
         select.form-control(name="publisher")
           option(value="" selected) -- Choose publisher to edit --
