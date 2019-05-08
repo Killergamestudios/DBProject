@@ -23,7 +23,7 @@ const getBooks = () => {
 
 // Update Books
 const updateBooks = (input) => {
-  let error = '';
+  let errors = {}, values = {};
   console.log('Update Books');
   return Promise.try(() => {
     return mysql.queryAsync(
@@ -32,9 +32,14 @@ const updateBooks = (input) => {
       mysql.escape(input.book) + "")
   }).then((res) => {
     if (res.length != 0) {
-      throw new myError('ISBN_ALREADY_EXISTS', input.ISBN);
-    }  
-    console.log(error); 
+      errors.ISBN = true;
+      values.ISBN = input.ISBN;
+    } 
+
+    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+      throw new myError('MALFORMED_INPUT', errors, values);
+    } 
+
     let sub = '';
     for (const key in input) {
       if (key == 'book') continue;

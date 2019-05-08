@@ -14,8 +14,8 @@ block content
           oninvalid="setCustomValidity('Must be 13 Numerical characters')",
           onchange="try{setCustomValidity('')}catch(e){}")
         label.form-control-placeholder(for="ISBN") ISBN
-        if error.message == 'ISBN_ALREADY_EXISTS'
-          small.alert-danger.form-text ISBN #{error.value} alreaedy exists
+        if error.messages && error.messages.ISBN
+          small.alert-danger.form-text ISBN #{error.values.ISBN} alreaedy exists
       div.form-group
         input.form-control#Title(type="text", name="Title", placeholder=" ")
         label.form-control-placeholder(for="Title") Book Title

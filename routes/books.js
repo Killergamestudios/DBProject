@@ -11,7 +11,7 @@ router.get('/update', function(req, res, next) {
         bodyClass: 'books-update', 
         books: result.books, 
         publishers: result.publishers, 
-        error: ''
+        error: {}
       });
   });
 });
