@@ -1,17 +1,31 @@
 extends menu-layout
 
 block content
+  h1 publisher update
   div.container
     form(action="/publisher/update", method="post")
-      input(type="text", name="Pname", placeholder="Publisher Name")
-      input(type="text", name="Year",placeholder="Establisment Year")
-      input(type="text", name="Street",placeholder="Address Street")
-      input(type="text", name="Number",placeholder="Address Number")
-      input(type="text", name="Pcode",placeholder="PostalCode")
-      //input(type="checkbox", name="new")
-      //select(name="publishers")
-        option(value="Choose Your Destiny..." selected) Choose Your Destiny...
-        option(value="Josephkhland") Josephkhland
-        option(value="Panloul") Panloul
-        option(value="Hulk") Hulk
-      input(type="submit", value="Submit")
+      div.form-group
+        select.form-control(name="publisher")
+          option(value="" selected) -- Choose publisher to edit --
+          each publisher in publishers
+            option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, #{publisher.Street} , #{publisher.Number}, #{publisher.PostalCode}
+      div.form-group
+        input.form-control#pubName(type="text", name="pubName", placeholder=" ")
+        label.form-control-placeholder(for="pubName") Publisher Name
+        if error.message == 'pubName_ALREADY_EXISTS'
+          small.alert-danger.form-text pubName #{error.value} alreaedy exists
+      div.form-group
+        input.form-control#estYear(type="number", name="estYear", placeholder=" ")
+        label.form-control-placeholder(for="estYear") publisher year of establishment
+      div.form-group
+        input.form-control#Street(type="text", name="Street", placeholder=" ")
+        label.form-control-placeholder(for="Street") Publisher Address street
+      div.form-group
+        input.form-control#Number(type="number", name="Number", placeholder=" ")
+        label.form-control-placeholder(for="Number") Publisher Address Number
+      div.form-group
+        input.form-control#PostCode(type="number", name="PostCode", placeholder=" ")
+        label.form-control-placeholder(for="PostCode") Publisher Postal Code
+      div.form-group
+        input.form-control(type="submit", value="Submit")       
+      
