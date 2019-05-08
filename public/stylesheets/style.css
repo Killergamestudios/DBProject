@@ -22,6 +22,11 @@ div.logo img {
 
 
 /* ----MENU---- */
+nav.navbar .dropdown-item:focus, 
+nav.navbar .dropdown-item:hover {
+  background-color: #c5def7;
+}
+
 nav.navbar li.dropdown:hover .dropdown-menu,
 nav.navbar li.dropdown .dropdown-menu:hover  {
   display: block;
@@ -100,17 +105,17 @@ body.front .content td {
 }
 
 /* ----FORMS---- */
-input {
+form .form-group .form-control {
   height: 35px;
   padding: 0 5px;
 }
 
-input[type="submit"] {
+form .form-group input[type="submit"] {
   width: auto;
   height: auto;
   padding: 10px 25px;
   margin: auto;
-  background: #f8f9fa;
+  background: #c5def7;
 }
 
 div.main-container div.container {
@@ -129,7 +134,11 @@ form span.alert-danger {
   width: 100%;
   display: block;
   padding: 5px 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+form small.alert-danger {
+  padding: 0 5px;
 }
 
 /* -- Floating Labels -- */

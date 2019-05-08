@@ -4,17 +4,12 @@ const myError = require('../errors');
 
 // Get Books
 const getBooks = () => {
-  let books;
   console.log('Fetch Books');
   return Promise.try(() => {
     return mysql.queryAsync('SELECT * FROM Book;');
   }).then((res) => {
-    books = res;
     console.log('Fetched Books successfully');
-    return mysql.queryAsync('SELECT * FROM Publisher;');
-  }).then((res) => {
-    console.log('Fetched Publishers successfully');
-    return { books: books, publishers: res };
+    return { books: res };
   }).catch((error) => {
     console.error('Failed to fetch books' + error);
     throw error;
@@ -23,23 +18,8 @@ const getBooks = () => {
 
 // Update Books
 const updateBooks = (input) => {
-  let errors = {}, values = {};
   console.log('Update Books');
   return Promise.try(() => {
-    return mysql.queryAsync(
-      "SELECT * FROM Book WHERE ISBN = " + 
-      mysql.escape(input.ISBN) + " and ISBN != " + 
-      mysql.escape(input.book) + "")
-  }).then((res) => {
-    if (res.length != 0) {
-      errors.ISBN = true;
-      values.ISBN = input.ISBN;
-    } 
-
-    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
-      throw new myError('MALFORMED_INPUT', errors, values);
-    } 
-
     let sub = '';
     for (const key in input) {
       if (key == 'book') continue;
@@ -60,7 +40,48 @@ const updateBooks = (input) => {
   });
 };
 
+// Insert Books
+const insertBooks = (input) => {
+  let errors = {}, errValues = {};
+  console.log('Insert Books');
+  return Promise.try(() => {
+    return mysql.queryAsync("SELECT * FROM Book WHERE ISBN = " + mysql.escape(input.ISBN));
+  }).then((res) => {
+    if (res.length != 0) {
+      errors.ISBN = true;
+      errValues.ISBN = input.ISBN;
+    }
+
+    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+      throw new myError('MALFORMED_INPUT', errors, errValues);
+    }
+
+    let keys = '', values = '';
+    for (const key in input) {
+      if (key == 'book') continue;
+      if (input[key]) {
+        if (keys != '') { 
+          keys = keys + ',';
+          values = values + ',';
+        }
+        keys = keys + mysql.escapeId(key);
+        values = values + mysql.escape(input[key]);
+      }
+    }
+    let query = 'INSERT INTO Book (' + keys + ') VALUES (' + values + ')';
+    console.log('Executing query: ' + query);
+    return mysql.queryAsync(query);
+  }).then((res) => {
+    console.log('Insert to Books successfully');
+    return { error: ''};
+  }).catch((error) => {
+    console.error('Failed to insert book ' + error);
+    throw error;
+  });
+};
+
 module.exports = {
   getBooks,
+  insertBooks,
   updateBooks
 };

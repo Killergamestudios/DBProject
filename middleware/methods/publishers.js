@@ -4,12 +4,10 @@ const myError = require('../errors');
 
 
 const getPublishers = () => {
-  let publishers;
   console.log('Fetch publishers');
   return Promise.try(() => {
     return mysql.queryAsync('SELECT * FROM Publisher;');
   }).then((res) => {
-    publishers = res;
     console.log('Fetched publishers successfully');
     return { publishers: res };
   }).catch((error) => {

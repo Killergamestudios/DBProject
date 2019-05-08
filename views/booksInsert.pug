@@ -1,16 +1,18 @@
 extends menu-layout
 
 block content
-  h1 Books Update
+  h1 Books Insert
   div.container
-    form(action="/books/update", method="post")
+    form(action="/books/insert", method="post")
       if error.messages
-        span.alert-danger Something went wrong with the submission.
+        span.alert-danger Something went wrong with the submission.  
       div.form-group
-        select.form-control(name="book")
-          option(value="" selected) -- Choose book to edit --
-          each book in books
-            option(value=book.ISBN) #{book.ISBN}, #{book.Title}, #{book.NumPages} σελ, εκδ #{book.pubName}, #{book.PubYear}
+        input.form-control#ISBN(type="text", name="ISBN", placeholder=" ", pattern="[0-9]{13}", 
+          oninvalid="setCustomValidity('Must be 13 Numerical characters')",
+          onchange="try{setCustomValidity('')}catch(e){}")
+        label.form-control-placeholder(for="ISBN") ISBN
+        if error.messages && error.messages.ISBN
+          small.alert-danger.form-text ISBN #{error.values.ISBN} alreaedy exists
       div.form-group
         input.form-control#Title(type="text", name="Title", placeholder=" ")
         label.form-control-placeholder(for="Title") Book Title

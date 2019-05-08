@@ -35,7 +35,9 @@ INSERT INTO Author (AFirst, ALast, ABirthDate) VALUES ('Stan','Lee','1922-12-28'
 WrittenBy (
     ISBN VARCHAR(13),
     authID INT(7) UNSIGNED,
-    PRIMARY KEY(ISBN, authID)
+    PRIMARY KEY(ISBN, authID),
+    FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
+    FOREIGN KEY (authID) REFERENCES Author(authID)
 );
 INSERT INTO WrittenBy (ISBN, authID) VALUES ('9024686134986',7);
 
@@ -49,7 +51,9 @@ INSERT INTO Category (categoryName, superCategoryName) VALUES ('Manga', 'Comic b
 BelongTo (
     ISBN VARCHAR(13),
     categoryName VARCHAR(30) CHARACTER SET utf8,
-    PRIMARY KEY(ISBN, categoryName)
+    PRIMARY KEY(ISBN, categoryName),
+    FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
+    FOREIGN KEY (categoryName) REFERENCES Category(categoryName)
 );
 INSERT INTO BelongTo (ISBN, categoryName) VALUES ('9034686234786','Action and Adventure');
 
