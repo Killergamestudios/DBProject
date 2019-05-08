@@ -121,6 +121,10 @@ form div.form-group {
   margin-bottom: 30px;
 }
 
+form .form-group input {
+  background: none;
+}
+
 /* -- Floating Labels -- */
 .form-group {
   position: relative;
@@ -133,6 +137,7 @@ form div.form-group {
   padding: 7px 0 0 13px;
   transition: all 200ms;
   opacity: 0.5;
+  z-index: -1;
 }
 
 .form-control:focus + .form-control-placeholder,
