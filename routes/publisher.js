@@ -32,14 +32,4 @@ router.post('/update', function(req, res, next) {
   });
 });
 
-
-
-
-
-  /* POST users listing. */
-router.post('/update', function(req, res, next) {
-    let variables = req.body;
-    res.render('publisherUpdate', { bodyClass: 'publisher-update'});
-});
-  
-  module.exports = router;
+module.exports = router;

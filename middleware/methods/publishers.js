@@ -19,7 +19,7 @@ const getPublishers = () => {
 };
 
 const updatePublisher = (input) => {
-  let error = '';
+  let errors = {}, values = {};
   console.log('Update Publisher');
   return Promise.try(() => {
     return mysql.queryAsync(
@@ -28,9 +28,14 @@ const updatePublisher = (input) => {
       mysql.escape(input.publisher) + "")
   }).then((res) => {
     if (res.length != 0) {
-      throw new myError('pubName_ALREADY_EXISTS', input.pubName);
+      errors.pubName = true;
+      values.pubName = input.pubName;
     }  
-    console.log(error); 
+    
+    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+      throw new myError('MALFORMED_INPUT', errors, values);
+    }
+
     let sub = '';
     for (const key in input) {
       if (key == 'publisher') continue;
