@@ -1,0 +1,29 @@
+extends menu-layout
+
+block content
+  h1 Publishers Insert
+  div.container
+    form(action="/publisher/insert", method="post")
+      if error.messages
+        span.alert-danger Something went wrong with the submission.  
+      div.form-group
+        input.form-control#pubName(type="text", name="pubName", placeholder=" ")
+        label.form-control-placeholder(for="pubName") Publisher Name
+        if error.messages && error.messages.pubName
+          small.alert-danger.form-text Publisher Name #{error.values.pubName} alreaedy exists
+      div.form-group
+        input.form-control#estYear.from-number(type="number", name="estYear", placeholder=" ")
+        label.form-control-placeholder(for="estYear") Publisher Year of Establishment 
+      div.form-group
+        input.form-control#Street(type="text", name="Street", placeholder=" ")
+        label.form-control-placeholder(for="Street") Publisher Adress Street
+      div.form-group
+        input#Number.from-number(type="number", name="Number", placeholder=" ")
+        label.form-control-placeholder(for="Number") Publisher Adress Number
+      div.form-group
+        input#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
+          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
+          onchange="try{setCustomValidity('')}catch(e){}")
+        label.form-control-placeholder(for="PostalCode") Publisher Postal Code
+      div.form-group
+        input.form-control(type="submit", value="Submit")
