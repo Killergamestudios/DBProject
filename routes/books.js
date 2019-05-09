@@ -11,6 +11,7 @@ router.get('/update', function(req, res, next) {
       res.render('booksUpdate', 
         {
           bodyClass: 'books-update', 
+          year: new Date().getFullYear(),
           books: result.books, 
           publishers: result2.publishers, 
           error: {}
@@ -29,6 +30,7 @@ router.post('/update', function(req, res, next) {
         res.render('booksUpdate', 
           {
             bodyClass: 'books-update', 
+            year: new Date().getFullYear(),
             books: result.books, 
             publishers: result2.publishers, 
             error: {}
@@ -44,6 +46,7 @@ router.get('/insert', function(req, res, next) {
     res.render('booksInsert', 
       {
         bodyClass: 'books-insert',
+        year: new Date().getFullYear(),
         publishers: result.publishers,
         error: {}
       });
@@ -58,7 +61,8 @@ router.post('/insert', function(req, res, next) {
     methodsPub.getPublishers().then((result) => {
       res.render('booksInsert', 
         { 
-          bodyClass: 'books-insert', 
+          bodyClass: 'books-insert',
+          year: new Date().getFullYear(),
           publishers: result.publishers, 
           error: error
         });

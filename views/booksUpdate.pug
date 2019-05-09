@@ -25,8 +25,8 @@ block content
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, 
               | #{publisher.Street} #{publisher.Number}, #{publisher.PostalCode}
       div.form-group
-        input#pubYear.form-control(type="number", name="pubYear", min="0", max="2019", placeholder=" ")
+        input#pubYear.form-control(type="number", name="pubYear", min="0", max=year, placeholder=" ")
         label.form-control-placeholder(for="pubYear") Year of Publication
-        small.form-text.text-muted Can be from 0 to 2019
+        small.form-text.text-muted Can be from 0 to #{year}
       div.form-group
         input.form-control(type="submit", value="Submit")
