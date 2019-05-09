@@ -32,4 +32,31 @@ router.post('/update', function(req, res, next) {
   });
 });
 
+router.get('/insert', function(req, res, next) {
+  methods.getPublishers().then((result) => {
+    res.render('publisherInsert', 
+      {
+        bodyClass: 'publisher-insert',
+        publishers: result.publishers,
+        error: {}
+      });
+  });
+});
+
+router.post('/insert', function(req, res, next) {
+  methods.insertPublishers(req.body).then((result) => {
+    res.render('thankyou', { bodyClass: 'thankyou' });
+  }).catch((error) => {
+    methods.getPublishers().then((result) => {
+      res.render('publisherInsert', 
+        { 
+          bodyClass: 'publisher-insert', 
+          publishers: result.publishers, 
+          error: error
+        });
+    });
+  });
+})
+
+
 module.exports = router;

@@ -54,9 +54,47 @@ const updatePublisher = (input) => {
   });
 };
 
+const insertPublishers = (input) => {
+  let errors = {}, errValues = {};
+  console.log('Insert Publishers');
+  return Promise.try(() => {
+    return mysql.queryAsync("SELECT * FROM Publisher WHERE pubName = " + mysql.escape(input.pubName));
+  }).then((res) => {
+    if (res.length != 0) {
+      errors.pubName = true;
+      errValues.pubName = input.pubName;
+    }
 
+    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+      throw new myError('MALFORMED_INPUT', errors, errValues);
+    }
+
+    let keys = '', values = '';
+    for (const key in input) {
+      if (key == 'publisher') continue;
+      if (input[key]) {
+        if (keys != '') { 
+          keys = keys + ',';
+          values = values + ',';
+        }
+        keys = keys + mysql.escapeId(key);
+        values = values + mysql.escape(input[key]);
+      }
+    }
+    let query = 'INSERT INTO Publisher (' + keys + ') VALUES (' + values + ')';
+    console.log('Executing query: ' + query);
+    return mysql.queryAsync(query);
+  }).then((res) => {
+    console.log('Insert to Publisher successfully');
+    return { error: ''};
+  }).catch((error) => {
+    console.error('Failed to insert publisher ' + error);
+    throw error;
+  });
+};
 
 module.exports = {
   getPublishers,
-  updatePublisher
+  updatePublisher,
+  insertPublishers
 };
