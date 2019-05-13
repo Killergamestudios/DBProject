@@ -9,7 +9,7 @@ router.get('/update', function(req, res, next) {
     res.render('publisherUpdate', { 
       bodyClass: 'publisher-update', 
       publishers: result.publishers, 
-      error: ''
+      error: {}
     });
   })
 });
@@ -19,8 +19,8 @@ router.get('/update', function(req, res, next) {
 router.post('/update', function(req, res, next) {
   methods.updatePublisher(req.body).then((result) => {
     res.render('thankyou', { bodyClass: 'publisher-update' });
-    console.log('Rendered');
   }).catch((error) => {
+    console.log(error);
     methods.getPublishers().then((result) => {
       res.render('publisherUpdate', 
         { 
@@ -47,6 +47,7 @@ router.post('/insert', function(req, res, next) {
   methods.insertPublishers(req.body).then((result) => {
     res.render('thankyou', { bodyClass: 'thankyou' });
   }).catch((error) => {
+    console.log(error);
     methods.getPublishers().then((result) => {
       res.render('publisherInsert', 
         { 

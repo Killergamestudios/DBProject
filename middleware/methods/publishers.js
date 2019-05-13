@@ -47,7 +47,7 @@ const updatePublisher = (input) => {
     return mysql.queryAsync(query);
   }).then((res) => {
     console.log('Updated Publishers successfully');
-    return { error: ''};
+    return ;
   }).catch((error) => {
     console.error('Failed to update Publishers ' + error);
     throw error;
@@ -86,7 +86,7 @@ const insertPublishers = (input) => {
     return mysql.queryAsync(query);
   }).then((res) => {
     console.log('Insert to Publisher successfully');
-    return { error: ''};
+    return ;
   }).catch((error) => {
     console.error('Failed to insert publisher ' + error);
     throw error;

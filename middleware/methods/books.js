@@ -33,7 +33,7 @@ const updateBooks = (input) => {
     return mysql.queryAsync(query);
   }).then((res) => {
     console.log('Updated Books successfully');
-    return { error: ''};
+    return ;
   }).catch((error) => {
     console.error('Failed to update book ' + error);
     throw error;
@@ -73,14 +73,40 @@ const insertBooks = (input) => {
     return mysql.queryAsync(query);
   }).then((res) => {
     console.log('Insert to Books successfully');
-    return { error: ''};
+    return ;
   }).catch((error) => {
     console.error('Failed to insert book ' + error);
     throw error;
   });
 };
 
+const deleteBooks = (input) => {
+  let errors = {}, errValues = {};
+  console.log('Deleting book');
+  return Promise.try(() => {
+    return mysql.queryAsync('SELECT * FROM Borrows WHERE ISBN = ' + mysql.escape(input.book) + ' AND dateOfReturn IS NULL');
+  }).then((res) => {
+    console.log(res);
+    if (res.length != 0) {
+      errors.Borrowed = true;
+      errValues.Borrowed = input.book;
+    }
+
+    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+      throw new myError('MALFORMED_INPUT', errors, errValues);
+    }
+
+    let query = 'DELETE FROM Book WHERE ISBN = ' + mysql.escape(input.book);
+    console.log('Executing query: ' + query);
+    return mysql.queryAsync(query);
+  }).then((_res) => {
+    console.log('Book deleted successfully');
+    return ;
+  })
+};
+
 module.exports = {
+  deleteBooks,
   getBooks,
   insertBooks,
   updateBooks

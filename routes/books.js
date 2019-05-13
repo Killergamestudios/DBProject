@@ -22,9 +22,10 @@ router.get('/update', function(req, res, next) {
 
 /* Books Update POST */
 router.post('/update', function(req, res, next) {
-  methodsBook.updateBooks(req.body).then((result) => {
+  methodsBook.updateBooks(req.body).then(() => {
     res.render('thankyou', { bodyClass: 'thankyou' });
   }).catch((error) => {
+    console.log(error);
     methodsBook.getBooks().then((result) => {
       methodsPub.getPublishers().then((result2) => {
         res.render('booksUpdate', 
@@ -33,14 +34,14 @@ router.post('/update', function(req, res, next) {
             year: new Date().getFullYear(),
             books: result.books, 
             publishers: result2.publishers, 
-            error: {}
+            error: error
           });
       });
     });
   });
 });
 
-/* Books Inserrt GET */
+/* Books Insert GET */
 router.get('/insert', function(req, res, next) {
   methodsPub.getPublishers().then((result) => {
     res.render('booksInsert', 
@@ -53,17 +54,47 @@ router.get('/insert', function(req, res, next) {
   });
 });
 
-/* Books Inserrt POST */
+/* Books Insert POST */
 router.post('/insert', function(req, res, next) {
-  methodsBook.insertBooks(req.body).then((result) => {
+  methodsBook.insertBooks(req.body).then(() => {
     res.render('thankyou', { bodyClass: 'thankyou' });
   }).catch((error) => {
+    console.log(error);
     methodsPub.getPublishers().then((result) => {
       res.render('booksInsert', 
         { 
           bodyClass: 'books-insert',
           year: new Date().getFullYear(),
           publishers: result.publishers, 
+          error: error
+        });
+    });
+  });
+});
+
+/* Books Delete GET */
+router.get('/delete', function(req, res, next) {
+  methodsBook.getBooks().then((result) => {
+    res.render('booksDelete', 
+      {
+        bodyClass: 'books-delete',
+        books: result.books,
+        error: {}
+      });
+  });
+});
+
+/* Books Delete POST */
+router.post('/delete', function(req, res, next) {
+  methodsBook.deleteBooks(req.body).then(() => {
+    res.render('thankyou', { bodyClass: 'thankyou' });
+  }).catch((error) => {
+    console.log(error);
+    methodsBook.getBooks().then((result) => {
+      res.render('booksDelete', 
+        { 
+          bodyClass: 'books-delete',
+          books: result.books,
           error: error
         });
     });
