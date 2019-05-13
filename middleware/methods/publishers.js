@@ -3,6 +3,8 @@ const Promise = require('bluebird');
 const myError = require('../errors');
 
 
+
+
 const getPublishers = () => {
   console.log('Fetch publishers');
   return Promise.try(() => {
@@ -92,6 +94,7 @@ const insertPublishers = (input) => {
     throw error;
   });
 };
+
 
 module.exports = {
   getPublishers,
