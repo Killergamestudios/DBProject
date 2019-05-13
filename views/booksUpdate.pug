@@ -11,6 +11,8 @@ block content
           option(value="" selected) -- Choose book to edit --
           each book in books
             option(value=book.ISBN) #{book.ISBN}, #{book.Title}, #{book.NumPages} σελ, εκδ #{book.pubName}, #{book.PubYear}
+        if error.messages && error.messages.BookExists
+          small.alert-danger.form-text Book #{error.values.BookExists} does not exists.
       div.form-group
         input.form-control#Title(type="text", name="Title", placeholder=" ")
         label.form-control-placeholder(for="Title") Book Title
@@ -24,6 +26,8 @@ block content
           each publisher in publishers
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, 
               | #{publisher.Street} #{publisher.Number}, #{publisher.PostalCode}
+        if error.messages && error.messages.BookExists
+          small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exists.
       div.form-group
         input#pubYear.form-control(type="number", name="pubYear", min="0", max=year, placeholder=" ")
         label.form-control-placeholder(for="pubYear") Year of Publication

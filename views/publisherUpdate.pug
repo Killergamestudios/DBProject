@@ -25,8 +25,8 @@ block content
       div.form-group
         input.form-control#Number(type="number", name="Number", placeholder=" ")
         label.form-control-placeholder(for="Number") Publisher Address Number
-      iv.form-group
-        input#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
+      div.form-group
+        input.form-control#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
           oninvalid="setCustomValidity('Must be 5 Numerical characters')",
           onchange="try{setCustomValidity('')}catch(e){}")
         label.form-control-placeholder(for="PostalCode") Publisher Postal Code

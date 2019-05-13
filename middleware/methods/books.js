@@ -18,8 +18,27 @@ const getBooks = () => {
 
 // Update Books
 const updateBooks = (input) => {
+  let errors = {}, errValues = {};
   console.log('Update Books');
   return Promise.try(() => {
+    return mysql.queryAsync('SELECT * FROM Book WHERE ISBN = '+ mysql.escape(input.book));
+  }).then((res) => {
+    if (res.length == 0) {
+      errors.BookExists = true;
+      errValues.BookExists = input.book;
+    }
+
+    return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.pubName));
+  }).then((res) => {
+    if (res.length == 0) {
+      errors.PublisherExists = true;
+      errValues.PublisherExists = input.pubName;
+    }
+
+    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+      throw new myError('MALFORMED_INPUT', errors, errValues);
+    }
+
     let sub = '';
     for (const key in input) {
       if (key == 'book') continue;
@@ -50,6 +69,13 @@ const insertBooks = (input) => {
     if (res.length != 0) {
       errors.ISBN = true;
       errValues.ISBN = input.ISBN;
+    }
+
+    return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.pubName));
+  }).then((res) => {
+    if (res.length == 0) {
+      errors.PublisherExists = true;
+      errValues.PublisherExists = input.pubName;
     }
 
     if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
@@ -84,9 +110,15 @@ const deleteBooks = (input) => {
   let errors = {}, errValues = {};
   console.log('Deleting book');
   return Promise.try(() => {
+    return mysql.queryAsync('SELECT * FROM Book WHERE ISBN = '+ mysql.escape(input.book));
+  }).then((res) => {
+    if (res.length == 0) {
+      errors.BookExists = true;
+      errValues.BookExists = input.book;
+    }
+
     return mysql.queryAsync('SELECT * FROM Borrows WHERE ISBN = ' + mysql.escape(input.book) + ' AND dateOfReturn IS NULL');
   }).then((res) => {
-    console.log(res);
     if (res.length != 0) {
       errors.Borrowed = true;
       errValues.Borrowed = input.book;
