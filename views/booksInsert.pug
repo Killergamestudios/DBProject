@@ -27,7 +27,7 @@ block content
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, 
               | #{publisher.Street} #{publisher.Number}, #{publisher.PostalCode}
         if error.messages && error.messages.BookExists
-          small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exists.
+          small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exist.
       div.form-group
         input#pubYear.form-control(type="number", name="pubYear", min="0", max=year, placeholder=" ")
         label.form-control-placeholder(for="pubYear") Year of Publication

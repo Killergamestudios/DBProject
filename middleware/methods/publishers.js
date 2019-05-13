@@ -22,10 +22,17 @@ const updatePublisher = (input) => {
   let errors = {}, values = {};
   console.log('Update Publisher');
   return Promise.try(() => {
+    return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.pubName));
+  }).then((res) => {
+    if (res.length == 0) {
+      errors.PublisherExists = true;
+      errValues.PublisherExists = input.pubName;
+    }
+    
     return mysql.queryAsync(
-      "SELECT * FROM Publisher WHERE pubName = " + 
-      mysql.escape(input.pubName) + " and pubName != " + 
-      mysql.escape(input.publisher) + "")
+      'SELECT * FROM Publisher WHERE pubName = ' + 
+      mysql.escape(input.pubName) + ' and pubName != ' + 
+      mysql.escape(input.publisher) + '')
   }).then((res) => {
     if (res.length != 0) {
       errors.pubName = true;
@@ -60,7 +67,7 @@ const insertPublishers = (input) => {
   let errors = {}, errValues = {};
   console.log('Insert Publishers');
   return Promise.try(() => {
-    return mysql.queryAsync("SELECT * FROM Publisher WHERE pubName = " + mysql.escape(input.pubName));
+    return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = ' + mysql.escape(input.pubName));
   }).then((res) => {
     if (res.length != 0) {
       errors.pubName = true;

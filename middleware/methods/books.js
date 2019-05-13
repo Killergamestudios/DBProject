@@ -30,7 +30,7 @@ const updateBooks = (input) => {
 
     return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.pubName));
   }).then((res) => {
-    if (res.length == 0) {
+    if (res.length == 0 && pubName != '') {
       errors.PublisherExists = true;
       errValues.PublisherExists = input.pubName;
     }
@@ -64,7 +64,7 @@ const insertBooks = (input) => {
   let errors = {}, errValues = {};
   console.log('Insert Books');
   return Promise.try(() => {
-    return mysql.queryAsync("SELECT * FROM Book WHERE ISBN = " + mysql.escape(input.ISBN));
+    return mysql.queryAsync('SELECT * FROM Book WHERE ISBN = ' + mysql.escape(input.ISBN));
   }).then((res) => {
     if (res.length != 0) {
       errors.ISBN = true;
