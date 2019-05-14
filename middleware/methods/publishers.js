@@ -103,8 +103,35 @@ const insertPublishers = (input) => {
 };
 
 
+const deletePublishers = (input) => {
+  let errors = {}, errValues = {};
+  console.log('Deleting publisher');
+  return Promise.try(() => {
+    return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.publisher));
+  }).then((res) =>{
+    if (res.length == 0) {
+      errors.PublisherExists = true;
+      errValues.PublisherExists = input.publisher;
+    }
+
+    if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+      throw new myError('MALFORMED_INPUT', errors, errValues);
+    }
+
+    let query = 'DELETE FROM Publisher WHERE pubName = ' + mysql.escape(input.publisher);
+    console.log('Executing query: ' + query);
+    return mysql.queryAsync(query);
+  }).then((_res) => {
+    console.log('Publisher deleted successfully');
+    return ;
+  })
+};
+
+
+
 module.exports = {
   getPublishers,
   updatePublisher,
-  insertPublishers
+  insertPublishers,
+  deletePublishers
 };

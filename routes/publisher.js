@@ -59,5 +59,36 @@ router.post('/insert', function(req, res, next) {
   });
 })
 
+/* Publisher Delete GET */
+router.get('/delete', function(req, res, next) {
+  methods.getPublishers().then((result) => {
+    res.render('publisherDelete', 
+      {
+        bodyClass: 'publisher-delete',
+        publishers: result.publishers,
+        error: {}
+      });
+  });
+});
+
+/* Publisher Delete POST */
+router.post('/delete', function(req, res, next) {
+  methods.deletePublishers(req.body).then(() => {
+    res.render('thankyou', { bodyClass: 'thankyou' });
+  }).catch((error) => {
+    console.log(error);
+    methods.getPublishers().then((result) => {
+      res.render('publisherDelete', 
+        { 
+          bodyClass: 'publisher-delete',
+          publishers: result.publishers,
+          error: error
+        });
+    });
+  });
+});
+
+
+
 
 module.exports = router;
