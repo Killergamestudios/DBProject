@@ -26,8 +26,8 @@ Semester Project For Databases Course.
 ## Installation
 #### Node JS
 ```sh
-$ sudo apt update
-$ sudo apt install nodejs
+$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
 ```
 
 #### npm
