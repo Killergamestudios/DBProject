@@ -10,6 +10,7 @@ var mysql = require('mysql');
 var indexRouter = require('./routes/index');
 var booksRouter = require('./routes/books');
 var publisherRouter = require('./routes/publisher');
+var memberRouter = require('./routes/members');
 // Editable!!
 
 var app = express();
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
 app.use('/publisher',publisherRouter);
+app.use('/members',memberRouter);
 // Editable!!
 
 // catch 404 and forward to error handler

@@ -1,0 +1,43 @@
+extends menu-layout
+block content
+  h1 Member Update
+  div.container
+    form(action="/member/update", method="post")
+      if error.messages
+        span.alert-danger Something went wrong with the submission.
+      div.form-group
+        select.form-control(name="member" required)
+          option(value="" selected) -- Choose member to edit --
+          each member in members
+            option(value=member.memberID) #{member.memberID}, #{member.MFirst}, #{member.MLast} , #{member.Street}, #{member.number}, #{member.PostalCode}, #{member.Mbirthdate}
+        if error.messages && error.messages.MemberExists
+          small.alert-danger.form-text Member #{error.values.MemberExists} does not exist.
+      div.form-group
+        input.form-control#memberID(type="text", name="memberID", placeholder=" ")
+        label.form-control-placeholder(for="memberID") Member ID
+        if error.messages && error.messages.memberID
+          small.alert-danger.form-text memberID #{error.value} already exists
+      div.form-group
+        input.form-control#MFirst(type="text", name="MFirst", placeholder=" ")
+        label.form-control-placeholder(for="MFirst") First Name
+      div.form-group
+        input.form-control#MLast(type="text", name="MLast", placeholder=" ")
+        label.form-control-placeholder(for="MLast") Last Name
+      div.form-group
+        input.form-control#Street(type="text", name="Street", placeholder=" ")
+        label.form-control-placeholder(for="Street") Member's Address street
+      div.form-group
+        input.form-control#number(type="number", name="number", placeholder=" ")
+        label.form-control-placeholder(for="number") Member's Address Number
+      div.form-group
+        input.form-control#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
+          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
+          onchange="try{setCustomValidity('')}catch(e){}")
+        label.form-control-placeholder(for="PostalCode") Member's Postal Code
+      div.form-group
+        input.form-control#Mbirthdate(type="text", name="Mbirthdate", placeholder=" ",pattern"[0-9]{4}/[0-3]{1}[0-9]{1}/[0-1]{1}[0-9]{1}, 
+          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
+          onchange="try{setCustomValidity('')}catch(e){}")
+        label.form-control-placeholder(for="Mbirthdate") Member's Birthday (YYYY/MM/DD)
+      div.form-group
+        input.form-control(type="submit", value="Submit")       
