@@ -4,17 +4,17 @@ block content
   h1 Publishers Delete
   div.container
     p.delete-notice.alert-warning 
-      | Deleting a Publisher will result in changing all book entries associated with this publisher. <br>
+      | Deleting a Publisher will result in changing all book entries associated with this publisher.
       | Please modify your data accordingly. This action is irreversable.
     form(action="/publisher/delete", method="post")
-      if error.messages
+      if error
         span.alert-danger Something went wrong with the submission.
       div.form-group
         select.form-control(name="publisher" required)
           option(value="" selected) -- Choose publisher to delete --
           each publisher in publishers
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, #{publisher.Street} ,#{publisher.Number}, #{publisher.PostalCode}
-        if error.messages && error.messages.PublisherExists
+        if error && error.messages && error.messages.PublisherExists
           small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exist.
-              div.form-group
+      div.form-group
         input.form-control(type="submit", value="Submit")

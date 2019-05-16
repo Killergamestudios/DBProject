@@ -8,8 +8,7 @@ router.get('/update', function(req, res, next) {
   methods.getPublishers().then((result) => {
     res.render('publisherUpdate', { 
       bodyClass: 'publisher-update', 
-      publishers: result.publishers, 
-      error: {}
+      publishers: result.publishers
     });
   })
 });
@@ -37,8 +36,7 @@ router.get('/insert', function(req, res, next) {
     res.render('publisherInsert', 
       {
         bodyClass: 'publisher-insert',
-        publishers: result.publishers,
-        error: {}
+        publishers: result.publishers
       });
   });
 });
@@ -65,8 +63,7 @@ router.get('/delete', function(req, res, next) {
     res.render('publisherDelete', 
       {
         bodyClass: 'publisher-delete',
-        publishers: result.publishers,
-        error: {}
+        publishers: result.publishers
       });
   });
 });

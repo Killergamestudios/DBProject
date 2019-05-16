@@ -4,14 +4,14 @@ block content
   h1 Books Insert
   div.container
     form(action="/books/insert", method="post")
-      if error.messages
+      if error
         span.alert-danger Something went wrong with the submission.  
       div.form-group
         input.form-control#ISBN(type="text", name="ISBN", placeholder=" ", pattern="[0-9]{13}", 
           oninvalid="setCustomValidity('Must be 13 Numerical characters')",
           onchange="try{setCustomValidity('')}catch(e){}")
         label.form-control-placeholder(for="ISBN") ISBN
-        if error.messages && error.messages.ISBN
+        if error && error.messages && error.messages.ISBN
           small.alert-danger.form-text ISBN #{error.values.ISBN} alreaedy exists
       div.form-group
         input.form-control#Title(type="text", name="Title", placeholder=" ")
@@ -26,7 +26,7 @@ block content
           each publisher in publishers
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, 
               | #{publisher.Street} #{publisher.Number}, #{publisher.PostalCode}
-        if error.messages && error.messages.BookExists
+        if error && error.messages && error.messages.BookExists
           small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exist.
       div.form-group
         input#pubYear.form-control(type="number", name="pubYear", min="0", max=year, placeholder=" ")

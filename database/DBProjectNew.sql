@@ -52,8 +52,9 @@ CREATE TABLE `BelongTo` (
   `ISBN` varchar(13) NOT NULL,
   `categoryName` varchar(30) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`ISBN`,`categoryName`),
-  FOREIGN KEY (ISBN) REFERENCES Book(ISBN) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (categoryName) REFERENCES Category(categoryName) ON UPDATE CASCADE ON DELETE CASCADE
+  KEY `BelongTo_ibfk_2` (`categoryName`),
+  CONSTRAINT `BelongTo_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `BelongTo_ibfk_2` FOREIGN KEY (`categoryName`) REFERENCES `Category` (`categoryName`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -63,7 +64,7 @@ CREATE TABLE `BelongTo` (
 
 LOCK TABLES `BelongTo` WRITE;
 /*!40000 ALTER TABLE `BelongTo` DISABLE KEYS */;
-INSERT INTO `BelongTo` VALUES ('9024586134986','Text Book'),('9024686134986','Text Book'),('9024686234786','Science'),('9024686234786','Text Book'),('9024686234986','Science'),('9024686234986','Text Book'),('9031686234786','Science'),('9034686234786','Action and Adventure');
+INSERT INTO `BelongTo` VALUES ('9034686234786','Action and Adventure'),('9024686234786','Science'),('9024686234986','Science'),('9031686234786','Science'),('9024586134986','Text Book'),('9024686134986','Text Book'),('9024686234786','Text Book'),('9024686234986','Text Book');
 /*!40000 ALTER TABLE `BelongTo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +83,7 @@ CREATE TABLE `Book` (
   `pubName` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`ISBN`),
   KEY `pubName` (`pubName`),
-  CONSTRAINT `Book_ibfk_1` FOREIGN KEY (`pubName`) REFERENCES `Publisher` (`pubName`) ON UPDATE CASCADE ON DELETE SET NULL
+  CONSTRAINT `Book_ibfk_1` FOREIGN KEY (`pubName`) REFERENCES `Publisher` (`pubName`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,8 +112,8 @@ CREATE TABLE `Borrows` (
   `dateOfReturn` date DEFAULT NULL,
   PRIMARY KEY (`memberID`,`ISBN`,`copyNr`,`dateOfBorrowing`),
   KEY `ISBN` (`ISBN`,`copyNr`),
-  CONSTRAINT `Borrows_ibfk_1` FOREIGN KEY (`ISBN`, `copyNr`) REFERENCES `Copies` (`ISBN`, `copyNr`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `Borrows_ibfk_2` FOREIGN KEY (`memberID`) REFERENCES `Member` (`memberID`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `Borrows_ibfk_1` FOREIGN KEY (`ISBN`, `copyNr`) REFERENCES `Copies` (`ISBN`, `copyNr`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Borrows_ibfk_2` FOREIGN KEY (`memberID`) REFERENCES `Member` (`memberID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -138,7 +139,7 @@ CREATE TABLE `Category` (
   `superCategoryName` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`categoryName`),
   KEY `superCategoryName` (`superCategoryName`),
-  CONSTRAINT `Category_ibfk_1` FOREIGN KEY (`superCategoryName`) REFERENCES `Category` (`categoryName`) ON UPDATE CASCADE ON DELETE SET NULL
+  CONSTRAINT `Category_ibfk_1` FOREIGN KEY (`superCategoryName`) REFERENCES `Category` (`categoryName`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -164,7 +165,7 @@ CREATE TABLE `Copies` (
   `copyNr` int(2) unsigned NOT NULL,
   `shelf` int(4) unsigned DEFAULT NULL,
   PRIMARY KEY (`ISBN`,`copyNr`),
-  CONSTRAINT `Copies_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `Copies_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -244,7 +245,7 @@ CREATE TABLE `PermanentEmployee` (
   `empID` int(7) unsigned NOT NULL,
   `HiringDate` date DEFAULT NULL,
   PRIMARY KEY (`empID`),
-  CONSTRAINT `PermanentEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `PermanentEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -302,11 +303,8 @@ CREATE TABLE `Reminder` (
   PRIMARY KEY (`empID`,`memberID`,`ISBN`,`copyNr`,`dateOfBorrowing`,`dateOfReminder`),
   KEY `memberID` (`memberID`,`ISBN`,`copyNr`,`dateOfBorrowing`),
   KEY `ISBN` (`ISBN`,`copyNr`),
-  CONSTRAINT `Reminder_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `Reminder_ibfk_2` FOREIGN KEY (`memberID`) REFERENCES `Member` (`memberID`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `Reminder_ibfk_3` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `Reminder_ibfk_4` FOREIGN KEY (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`) REFERENCES `Borrows` (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `Reminder_ibfk_5` FOREIGN KEY (`ISBN`, `copyNr`) REFERENCES `Copies` (`ISBN`, `copyNr`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `Reminder_ibfk_1` FOREIGN KEY (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`) REFERENCES `Borrows` (`memberID`, `ISBN`, `copyNr`, `dateOfBorrowing`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Reminder_ibfk_2` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -331,7 +329,7 @@ CREATE TABLE `TemporaryEmployee` (
   `empID` int(7) unsigned NOT NULL,
   `ContractNr` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`empID`),
-  CONSTRAINT `TemporaryEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `TemporaryEmployee_ibfk_1` FOREIGN KEY (`empID`) REFERENCES `Employee` (`empID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -356,8 +354,9 @@ CREATE TABLE `WrittenBy` (
   `ISBN` varchar(13) NOT NULL,
   `authID` int(7) unsigned NOT NULL,
   PRIMARY KEY (`ISBN`,`authID`),
-  FOREIGN KEY (ISBN) REFERENCES Book(ISBN) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (authID) REFERENCES Author(authID) ON UPDATE CASCADE ON DELETE CASCADE
+  KEY `authID` (`authID`),
+  CONSTRAINT `WrittenBy_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `Book` (`ISBN`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `WrittenBy_ibfk_2` FOREIGN KEY (`authID`) REFERENCES `Author` (`authID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -367,7 +366,7 @@ CREATE TABLE `WrittenBy` (
 
 LOCK TABLES `WrittenBy` WRITE;
 /*!40000 ALTER TABLE `WrittenBy` DISABLE KEYS */;
-INSERT INTO `WrittenBy` VALUES ('9024586134986',7),('9024686134986',7),('9024686234786',3),('9024686234786',4),('9024686234986',3),('9024686234986',4),('9031686234786',5),('9034686234786',1);
+INSERT INTO `WrittenBy` VALUES ('9034686234786',1),('9024686234786',3),('9024686234986',3),('9024686234786',4),('9024686234986',4),('9031686234786',5),('9024586134986',7),('9024686134986',7);
 /*!40000 ALTER TABLE `WrittenBy` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -380,4 +379,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-06 20:01:50
+-- Dump completed on 2019-05-16 20:16:52

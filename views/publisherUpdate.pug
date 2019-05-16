@@ -4,19 +4,19 @@ block content
   h1 Publisher Update
   div.container
     form(action="/publisher/update", method="post")
-      if error.messages
+      if error
         span.alert-danger Something went wrong with the submission.
       div.form-group
         select.form-control(name="publisher" required)
           option(value="" selected) -- Choose publisher to edit --
           each publisher in publishers
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, #{publisher.Street} , #{publisher.Number}, #{publisher.PostalCode}
-        if error.messages && error.messages.BookExists
+        if error && error.messages && error.messages.BookExists
           small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exist.
       div.form-group
         input.form-control#pubName(type="text", name="pubName", placeholder=" ")
         label.form-control-placeholder(for="pubName") Publisher Name
-        if error.messages && error.messages.pubName
+        if error && error.messages && error.messages.pubName
           small.alert-danger.form-text pubName #{error.value} alreaedy exists
       div.form-group
         input.form-control#estYear(type="number", name="estYear", placeholder=" ")
