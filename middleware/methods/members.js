@@ -4,7 +4,7 @@ const myError = require('../errors');
 
 // Get Members
 const getMembers = () => {
-  console.log('Fetch Memberss');
+  console.log('Fetch Members');
   return Promise.try(() => {
     return mysql.queryAsync('SELECT * FROM Member;');
   }).then((res) => {
