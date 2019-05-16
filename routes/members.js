@@ -60,7 +60,7 @@ router.get('/insert', function(req, res, next) {
 
 /* Member Delete GET */
 router.get('/delete', function (req, res, next) {
-    methods.getMembers().then((result) => {
+    methods.getMemberToDelete().then((result) => {
         res.render('memberDelete',
             {
                 bodyClass: 'member-delete',
