@@ -60,4 +60,33 @@ router.get('/insert', function(req, res, next) {
     });
 });
 
+/* Member Delete GET */
+router.get('/delete', function (req, res, next) {
+    methods.getMembers().then((result) => {
+        res.render('memberDelete',
+            {
+                bodyClass: 'member-delete',
+                members: result.members,
+                error: {}
+            });
+    });
+});
+
+/* Member Delete POST */
+router.post('/delete', function (req, res, next) {
+    methods.deleteMembers(req.body).then(() => {
+        res.render('thankyou', { bodyClass: 'thankyou' });
+    }).catch((error) => {
+        console.log(error);
+        methods.getMembers().then((result) => {
+            res.render('memberDelete',
+                {
+                    bodyClass: 'member-delete',
+                    members: result.members,
+                    error: error
+                });
+        });
+    });
+});
+
 module.exports = router;
