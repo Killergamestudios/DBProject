@@ -9,7 +9,7 @@ block content
         select.form-control(name="member" required)
           option(value="" selected) -- Choose member to edit --
           each member in members
-            option(value=member.memberID) #{member.memberID}, #{member.MFirst}, #{member.MLast} , #{member.Street}, #{member.number}, #{member.PostalCode}, #{member.Mbirthdate}
+            option(value=member.memberID) #{member.memberID}, #{member.MFirst}, #{member.MLast} , #{member.Street}, #{member.Number}, #{member.PostalCode}, #{member.MBirthdate}
         if error.messages && error.messages.MemberExists
           small.alert-danger.form-text Member #{error.values.MemberExists} does not exist.
       div.form-group
@@ -27,15 +27,15 @@ block content
         input.form-control#Street(type="text", name="Street", placeholder=" ")
         label.form-control-placeholder(for="Street") Member's Address street
       div.form-group
-        input.form-control#number(type="number", name="number", placeholder=" ")
-        label.form-control-placeholder(for="number") Member's Address Number
+        input.form-control#Number(type="number", name="Number", placeholder=" ")
+        label.form-control-placeholder(for="Number") Member's Address Number
       div.form-group
         input.form-control#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
           oninvalid="setCustomValidity('Must be 5 Numerical characters')",
           onchange="try{setCustomValidity('')}catch(e){}")
         label.form-control-placeholder(for="PostalCode") Member's Postal Code
       div.form-group
-        input.form-control#Mbirthdate(type="date", name="Mbirthdate", placeholder=" ")
-        label.form-control-placeholder(for="Mbirthdate") Member's Birthday (DD/MM/YYYY)
+        input.form-control#MBirthdate(type="date", name="MBirthdate", placeholder=" ")
+        label.form-control-placeholder(for="MBirthdate") Member's Birthday (DD/MM/YYYY)
       div.form-group
         input.form-control(type="submit", value="Submit")       
