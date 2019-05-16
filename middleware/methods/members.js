@@ -109,18 +109,18 @@ const deleteMembers = (input) => {
     let errors = {}, errValues = {};
     console.log('Deleting member');
     return Promise.try(() => {
-        return mysql.queryAsync('SELECT * FROM Member WHERE memberID = ' + mysql.escape(input.member));
+        return mysql.queryAsync('SELECT * FROM Member WHERE memberID = ' + mysql.escape(input.memberID));
     }).then((res) => {
         if (res.length == 0) {
             errors.MemberExists = true;
-            errValues.MemberExists = input.member;
+            errValues.MemberExists = input.memberID;
         }
 
         if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
             throw new myError('MALFORMED_INPUT', errors, errValues);
         }
 
-        let query = 'DELETE FROM Member WHERE memberID = ' + mysql.escape(input.member);
+        let query = 'DELETE FROM Member WHERE memberID = ' + mysql.escape(input.memberID);
         console.log('Executing query: ' + query);
         return mysql.queryAsync(query);
     }).then((_res) => {
