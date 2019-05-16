@@ -16,5 +16,5 @@ block content
             option(value=member.memberID) #{member.memberID}, #{member.MFirst}, #{member.MLast} , #{member.Street}, #{member.Number}, #{member.PostalCode}, #{member.MBirthDate}
 		if error && error.messages && error.messages.MemberExists
           small.alert-danger.form-text Member #{error.values.MemberExists} does not exist.
-              div.form-group
+      div.form-group
         input.form-control(type="submit", value="Submit")
