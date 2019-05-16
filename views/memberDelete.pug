@@ -13,7 +13,7 @@ block content
         select.form-control(name="member" required)
           option(value="" selected) -- Choose member to delete --
           each member in members
-            option(value=member.memberID) #{member.memberID}, #{member.MFirst}, #{member.MLast} , #{member.Street}, #{member.Number}, #{member.PostalCode}, #{getFullYear(member.MBirthDate).concat("-",getMonth(member.MBirthDate),"-",getDate(member.MBirthDate))}
+            option(value=member.memberID) #{member.memberID}, #{member.MFirst}, #{member.MLast} , #{member.Street}, #{member.Number}, #{member.PostalCode}, (#{member.MBirthDate}.getFullYear()).concat("-",#{member.MBirthDate}.getMonth(),"-",#{member.MBirthDate}.getDate())
         if error.messages && error.messages.MemberExists
           small.alert-danger.form-text Member #{error.values.MemberExists} does not exist.
               div.form-group
