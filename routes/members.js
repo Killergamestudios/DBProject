@@ -76,7 +76,7 @@ router.post('/delete', function (req, res, next) {
         res.render('thankyou', { bodyClass: 'thankyou' });
     }).catch((error) => {
         console.log(error);
-        methods.getMembers().then((result) => {
+        methods.getMemberToDelete().then((result) => {
             res.render('memberDelete',
                 {
                     bodyClass: 'member-delete',

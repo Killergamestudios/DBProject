@@ -20,6 +20,20 @@ const getMembers = () => {
   });
 };
 
+//GET FOR DELETE METHOD: 
+const getMemberToDelete = () => {
+    console.log('Fetch members');
+    return Promise.try(() => {
+        return mysql.queryAsync('SELECT * FROM Member;');
+    }).then((res) => {
+        console.log('Fetched Members successfully');
+        return { members: res };
+    }).catch((error) => {
+        console.error('Failed to fetch members' + error);
+        throw error;
+    });
+};
+
 // Update Members
 const updateMembers = (input) => {
     let errors = {}, errValues = {};
@@ -109,18 +123,18 @@ const deleteMembers = (input) => {
     let errors = {}, errValues = {};
     console.log('Deleting member');
     return Promise.try(() => {
-        return mysql.queryAsync('SELECT * FROM Member WHERE memberID = ' + mysql.escape(input.memberID));
+        return mysql.queryAsync('SELECT * FROM Member WHERE memberID = ' + mysql.escape(input.member));
     }).then((res) => {
         if (res.length == 0) {
             errors.MemberExists = true;
-            errValues.MemberExists = input.memberID;
+            errValues.MemberExists = input.member;
         }
 
         if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
             throw new myError('MALFORMED_INPUT', errors, errValues);
         }
 
-        let query = 'DELETE FROM Member WHERE memberID = ' + mysql.escape(input.memberID);
+        let query = 'DELETE FROM Member WHERE memberID = ' + mysql.escape(input.member);
         console.log('Executing query: ' + query);
         return mysql.queryAsync(query);
     }).then((_res) => {
@@ -131,6 +145,7 @@ const deleteMembers = (input) => {
 
 module.exports = {
     getMembers,
+    getMemberToDelete,
     updateMembers,
     insertMembers,
     deleteMembers
