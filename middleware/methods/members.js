@@ -20,20 +20,6 @@ const getMembers = () => {
   });
 };
 
-//GET FOR DELETE METHOD: 
-const getMemberToDelete = () => {
-    console.log('Fetch members');
-    return Promise.try(() => {
-        return mysql.queryAsync('SELECT * FROM Member;');
-    }).then((res) => {
-        console.log('Fetched Members successfully');
-        return { members: res };
-    }).catch((error) => {
-        console.error('Failed to fetch members' + error);
-        throw error;
-    });
-};
-
 // Update Members
 const updateMembers = (input) => {
     let errors = {}, errValues = {};
@@ -145,7 +131,6 @@ const deleteMembers = (input) => {
 
 module.exports = {
     getMembers,
-    getMemberToDelete,
     updateMembers,
     insertMembers,
     deleteMembers
