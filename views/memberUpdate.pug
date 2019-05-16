@@ -36,8 +36,8 @@ block content
           onchange="try{setCustomValidity('')}catch(e){}")
         label.form-control-placeholder(for="PostalCode") Member's Postal Code
       div.form-group
-        input.form-control#MBirthDate(type="text", name="MBirthDdate", placeholder=" ", 
-          pattern="[0-9]{4}-[0-3]{1}[0-9]{1}-[0-1]{1}[0-9]{1}", 
+        input.form-control#MBirthDate(type="text", name="MBirthDate", placeholder=" ", 
+          pattern="[0-9]{4}/[0-3]{1}[0-9]{1}/[0-1]{1}[0-9]{1}", 
           oninvalid="setCustomValidity('Must be 5 Numerical characters')",
           onchange="try{setCustomValidity('')}catch(e){}")
         label.form-control-placeholder(for="MBirthDate") Member's Birthday (YYYY-MM-DD)
