@@ -9,6 +9,10 @@ const getMembers = () => {
     return mysql.queryAsync('SELECT * FROM Member;');
   }).then((res) => {
     console.log('Fetched Members successfully');
+    for (let i = 0; i < res.length; i++) {
+      let date = res[i].MBirthDate;
+      res[i].MBirthDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    }
     return { members: res };
   }).catch((error) => {
     console.error('Failed to fetch members' + error);
@@ -21,7 +25,7 @@ const updateMembers = (input) => {
     let errors = {}, errValues = {};
     console.log('Update Members');
     return Promise.try(() => {
-      return mysql.queryAsync('SELECT * FROM Member WHERE memberID = '+ mysql.escape(input.memberID));
+      return mysql.queryAsync('SELECT * FROM Member WHERE memberID = '+ mysql.escape(input.member));
     }).then((res) => {
       if (res.length == 0) {
         errors.memberExists = true;
@@ -35,11 +39,11 @@ const updateMembers = (input) => {
     }).then((res) => {
       if (res.length != 0) {
         errors.memberID = true;
-        values.memberID = input.memberID;
+        errValues.memberID = input.memberID;
       }  
       
       if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
-        throw new myError('MALFORMED_INPUT', errors, values);
+        throw new myError('MALFORMED_INPUT', errors, errValues);
       }
   
       let sub = '';

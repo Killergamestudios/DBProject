@@ -4,12 +4,12 @@ block content
   h1 Members Insert
   div.container
     form(action="/members/insert", method="post")
-      if error.messages
+      if error
         span.alert-danger Something went wrong with the submission.  
       div.form-group
         input.form-control#memberID(type="text", name="memberID", placeholder=" ")
         label.form-control-placeholder(for="memberID") Member ID
-        if error.messages && error.messages.memberID
+        if error && error.messages && error.messages.memberID
           small.alert-danger.form-text Member ID #{error.values.memberID} already exists
       div.form-group
         input.form-control#MFirst(type="text", name="MFirst", placeholder=" ")

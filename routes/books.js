@@ -13,8 +13,7 @@ router.get('/update', function(req, res, next) {
           bodyClass: 'books-update', 
           year: new Date().getFullYear(),
           books: result.books, 
-          publishers: result2.publishers, 
-          error: {}
+          publishers: result2.publishers
         });
     });
   });
@@ -48,8 +47,7 @@ router.get('/insert', function(req, res, next) {
       {
         bodyClass: 'books-insert',
         year: new Date().getFullYear(),
-        publishers: result.publishers,
-        error: {}
+        publishers: result.publishers
       });
   });
 });
@@ -78,8 +76,7 @@ router.get('/delete', function(req, res, next) {
     res.render('booksDelete', 
       {
         bodyClass: 'books-delete',
-        books: result.books,
-        error: {}
+        books: result.books
       });
   });
 });

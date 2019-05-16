@@ -7,16 +7,16 @@ block content
       | Deleting a book will result in deleting all entries associated with this book. <br>
       | Please modify your data accordingly. This action is irreversable.
     form(action="/books/delete", method="post")
-      if error.messages
+      if error
         span.alert-danger Something went wrong with the submission.
       div.form-group
         select.form-control(name="book" required)
           option(value="" selected) -- Choose book to delete --
           each book in books
             option(value=book.ISBN) #{book.ISBN}, #{book.Title}, #{book.NumPages} σελ, εκδ #{book.pubName}, #{book.PubYear}
-        if error.messages && error.messages.BookExists
+        if error && error.messages && error.messages.BookExists
           small.alert-danger.form-text Book #{error.values.BookExists} does not exist.
-        else if error.messages && error.messages.Borrowed
+        else if error && error.messages && error.messages.Borrowed
           small.alert-danger.form-text Book #{error.values.Borrowed} is currently borrowed and cannot be deleted.
       div.form-group
         input.form-control(type="submit", value="Submit")

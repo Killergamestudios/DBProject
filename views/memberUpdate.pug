@@ -2,20 +2,21 @@ extends menu-layout
 block content
   h1 Member Update
   div.container
-    form(action="/member/update", method="post")
-      if error.messages
+    form(action="/members/update", method="post")
+      if error
         span.alert-danger Something went wrong with the submission.
       div.form-group
         select.form-control(name="member" required)
           option(value="" selected) -- Choose member to edit --
           each member in members
-            option(value=member.memberID) #{member.memberID}, #{member.MFirst}, #{member.MLast} , #{member.Street}, #{member.Number}, #{member.PostalCode}, #{getFullYear(member.MBirthDate).concat("-",getMonth(member.MBirthDate),"-",getDate(member.MBirthDate))}
-        if error.messages && error.messages.MemberExists
-          small.alert-danger.form-text Member #{error.values.MemberExists} does not exist.
+            option(value=member.memberID) #{member.memberID}, #{member.MFirst} #{member.MLast}, 
+              | #{member.Street} #{member.Number}, #{member.PostalCode}, #{member.MBirthDate}
+        if error && error.messages && error.messages.memberExists
+          small.alert-danger.form-text Member #{error.values.memberExists} does not exist.
       div.form-group
         input.form-control#memberID(type="text", name="memberID", placeholder=" ")
         label.form-control-placeholder(for="memberID") Member ID
-        if error.messages && error.messages.memberID
+        if error && error.messages && error.messages.memberID
           small.alert-danger.form-text memberID #{error.value} already exists
       div.form-group
         input.form-control#MFirst(type="text", name="MFirst", placeholder=" ")
@@ -35,7 +36,10 @@ block content
           onchange="try{setCustomValidity('')}catch(e){}")
         label.form-control-placeholder(for="PostalCode") Member's Postal Code
       div.form-group
-        input.form-control#MBirthDate(type="date", name="MBirthDate", placeholder=" ")
-        label.form-control-placeholder(for="MBirthDate") Member's Birthday (DD/MM/YYYY)
+        input.form-control#Mbirthdate(type="text", name="MBirtDdate", placeholder=" ", 
+          pattern="[0-9]{4}/[0-3]{1}[0-9]{1}/[0-1]{1}[0-9]{1}", 
+          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
+          onchange="try{setCustomValidity('')}catch(e){}")
+        label.form-control-placeholder(for="Mbirthdate") Member's Birthday (YYYY/MM/DD)
       div.form-group
-        input.form-control(type="submit", value="Submit")       
+        input.form-control(type="submit", value="Submit")

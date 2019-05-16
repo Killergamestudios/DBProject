@@ -8,8 +8,7 @@ router.get('/update', function(req, res, next) {
   methods.getMembers().then((result) => {
     res.render('memberUpdate', { 
       bodyClass: 'member-update', 
-      members: result.members, 
-      error: {}
+      members: result.members
     });
   })
 });
@@ -25,7 +24,7 @@ router.post('/update', function(req, res, next) {
       res.render('memberUpdate', 
         { 
           bodyClass: 'member-update', 
-          members: result.members,  
+          members: result.members,
           error: error
         });
     });
@@ -37,8 +36,7 @@ router.get('/insert', function(req, res, next) {
       res.render('memberInsert', 
         {
           bodyClass: 'member-insert',
-          members: result.members,
-          error: {}
+          members: result.members
         });
     });
 });
