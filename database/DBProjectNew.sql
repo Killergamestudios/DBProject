@@ -416,6 +416,40 @@ LOCK TABLES `WrittenBy` WRITE;
 INSERT INTO `WrittenBy` VALUES ('9034686234786',1),('9024686234786',3),('9024686234986',3),('9024686234786',4),('9024686234986',4),('9031686234786',5),('9024586134986',7),('9024686134986',7);
 /*!40000 ALTER TABLE `WrittenBy` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `tmpEmployees`
+--
+
+DROP TABLE IF EXISTS `tmpEmployees`;
+/*!50001 DROP VIEW IF EXISTS `tmpEmployees`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `tmpEmployees` AS SELECT 
+ 1 AS `empID`,
+ 1 AS `EFirst`,
+ 1 AS `ELast`,
+ 1 AS `Salary`,
+ 1 AS `ContractNr`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `tmpEmployees`
+--
+
+/*!50001 DROP VIEW IF EXISTS `tmpEmployees`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `tmpEmployees` AS select `E`.`empID` AS `empID`,`E`.`EFirst` AS `EFirst`,`E`.`ELast` AS `ELast`,`E`.`Salary` AS `Salary`,`TE`.`ContractNr` AS `ContractNr` from (`Employee` `E` join `TemporaryEmployee` `TE`) where (`E`.`empID` = `TE`.`empID`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -426,4 +460,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-17 16:04:27
+-- Dump completed on 2019-05-17 18:35:59

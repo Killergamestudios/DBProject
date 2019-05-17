@@ -107,6 +107,12 @@ TemporaryEmployee (
 INSERT INTO TemporaryEmployee (empID, ContractNr)
 VALUES ('10','189795413');
 
+CREATE VIEW tmpEmployees
+    AS
+        SELECT E.empID, EFirst, ELast, Salary, ContractNr
+        FROM Employee AS E, TemporaryEmployee AS TE
+        WHERE E.empID = TE.empID;
+
 Borrows (
     memberID INT(7) UNSIGNED, 
     ISBN VARCHAR(13), 

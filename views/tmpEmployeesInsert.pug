@@ -1,0 +1,27 @@
+extends menu-layout
+
+block content
+  h1 Temporary Employee Insert
+  div.container
+    form(action="/tmpEmployees/insert", method="post")
+      if error
+        span.alert-danger Something went wrong with the submission.  
+      div.form-group
+        input.form-control#empID(type="text", name="empID", placeholder=" ")
+        label.form-control-placeholder(for="empID") empID
+        if error && error.messages && error.messages.empID
+          small.alert-danger.form-text Employee ID #{error.values.empID} alreaedy exists
+      div.form-group
+        input.form-control#EFirst(type="text", name="EFirst", placeholder=" ")
+        label.form-control-placeholder(for="EFirst") First name
+      div.form-group
+        input.form-control#ELast(type="text", name="ELast", placeholder=" ")
+        label.form-control-placeholder(for="ELast") Last name
+      div.form-group
+        input#Salary.form-control(type="number", name="Salary", min="0", placeholder=" ")
+        label.form-control-placeholder(for="Salary") Salary
+      div.form-group
+        input.form-control#ContractNr(type="text", name="ContractNr", placeholder=" ")
+        label.form-control-placeholder(for="ContractNr") Contract number
+      div.form-group
+        input.form-control(type="submit", value="Submit")
