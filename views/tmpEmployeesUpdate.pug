@@ -1,0 +1,28 @@
+extends menu-layout
+block content
+  h1 Temporary Employee Update
+  div.container
+    form(action="/tmpEmployees/update", method="post")
+      if error
+        span.alert-danger Something went wrong with the submission.
+      div.form-group
+        select.form-control(name="tmpEmp" required)
+          option(value="" selected) -- Choose temporary employee to edit --
+          each tmpEmp in tmpEmps
+            option(value=tmpEmp.empID) #{tmpEmp.EFirst} #{tmpEmp.ELast}, #{tmpEmp.Salary}, #{tmpEmp.ContractNr}
+        if error && error.messages && error.messages.tmpEmployeeExists
+          small.alert-danger.form-text Temporary employee #{error.values.tmpEmployeeExists} does not exist.
+      div.form-group
+        input.form-control#EFirst(type="text", name="EFirst", placeholder=" ")
+        label.form-control-placeholder(for="EFirst") First name
+      div.form-group
+        input.form-control#ELast(type="text", name="ELast", placeholder=" ")
+        label.form-control-placeholder(for="ELast") Last name
+      div.form-group
+        input#Salary.form-control(type="number", name="Salary", min="0", placeholder=" ")
+        label.form-control-placeholder(for="Salary") Salary
+      div.form-group
+        input.form-control#ContractNr(type="text", name="ContractNr", placeholder=" ")
+        label.form-control-placeholder(for="ContractNr") Contract number
+      div.form-group
+        input.form-control(type="submit", value="Submit")

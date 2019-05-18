@@ -84,7 +84,6 @@ const insertBooks = (input) => {
 
     let keys = '', values = '';
     for (const key in input) {
-      if (key == 'book') continue;
       if (input[key]) {
         if (keys != '') { 
           keys = keys + ',';
@@ -134,7 +133,10 @@ const deleteBooks = (input) => {
   }).then((_res) => {
     console.log('Book deleted successfully');
     return ;
-  })
+  }).catch((error) => {
+    console.error('Failed to delete Book ' + error);
+    throw error;
+  });
 };
 
 module.exports = {

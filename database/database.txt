@@ -107,6 +107,12 @@ TemporaryEmployee (
 INSERT INTO TemporaryEmployee (empID, ContractNr)
 VALUES ('10','189795413');
 
+CREATE VIEW tmpEmployees
+    AS
+        SELECT E.empID, EFirst, ELast, Salary, ContractNr
+        FROM Employee AS E, TemporaryEmployee AS TE
+        WHERE E.empID = TE.empID;
+
 Borrows (
     memberID INT(7) UNSIGNED, 
     ISBN VARCHAR(13), 
@@ -119,7 +125,29 @@ Borrows (
 );
 
 INSERT INTO Borrows (memberID, ISBN, copyNr, dateOfBorrowing, dateOfReturn)
-VALUES ('2', '9034686234786','2','2019-04-01',NULL);
+VALUES ('1', '9024586134986','1','2019-04-01',NULL);
+
+UPDATE Borrows SET dateOfReturn = "2019-05-10" WHERE ISBN = "9024586134986" AND memberID = "1";
+
+CREATE TRIGGER incrBorrowed BEFORE INSERT ON Borrows
+FOR EACH ROW
+BEGIN
+    IF NEW.dateOfReturn IS NULL THEN
+        UPDATE Member 
+        SET NumOfBorrowed = NumOfBorrowed + 1
+        WHERE memberID = NEW.memberID;
+    END IF;
+END;//
+
+CREATE TRIGGER decrBorrowed BEFORE UPDATE ON Borrows
+FOR EACH ROW
+BEGIN
+  IF OLD.dateOfReturn IS NULL AND NEW.dateOfReturn IS NOT NULL THEN
+    UPDATE Member
+    SET NumOfBorrowed = NumOfBorrowed - 1
+    WHERE memberID = NEW.memberID;
+  END IF;
+END;//
 
 Reminder (
     empID INT(7) UNSIGNED,

@@ -2,9 +2,6 @@ var mysql = require('../sql');
 const Promise = require('bluebird');
 const myError = require('../errors');
 
-
-
-
 const getPublishers = () => {
   console.log('Fetch publishers');
   return Promise.try(() => {
