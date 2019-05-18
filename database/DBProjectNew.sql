@@ -98,6 +98,20 @@ INSERT INTO `Book` VALUES ('9024586134986','Μαθηματική Ανάλυση 
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `BorrowedBooks`
+--
+
+DROP TABLE IF EXISTS `BorrowedBooks`;
+/*!50001 DROP VIEW IF EXISTS `BorrowedBooks`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `BorrowedBooks` AS SELECT 
+ 1 AS `title`,
+ 1 AS `MFirst`,
+ 1 AS `MLast`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `Borrows`
 --
 
@@ -434,6 +448,24 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Final view structure for view `BorrowedBooks`
+--
+
+/*!50001 DROP VIEW IF EXISTS `BorrowedBooks`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `BorrowedBooks` AS select `Book`.`Title` AS `title`,`Member`.`MFirst` AS `MFirst`,`Member`.`MLast` AS `MLast` from ((`Book` join `Borrows`) join `Member`) where ((`Book`.`ISBN` = `Borrows`.`ISBN`) and isnull(`Borrows`.`dateOfReturn`) and (`Member`.`memberID` = `Borrows`.`memberID`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `tmpEmployees`
 --
 
@@ -460,4 +492,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-17 18:35:59
+-- Dump completed on 2019-05-18 17:45:42
