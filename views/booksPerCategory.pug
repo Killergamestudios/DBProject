@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Books Per Category
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Category
+          th # of Books
+      tbody
+        each category in categories
+          tr
+            each value in category
+              td #{value}

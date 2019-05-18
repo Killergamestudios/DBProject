@@ -1,0 +1,19 @@
+extends menu-layout
+block content
+  h1 Full Books List
+  div.content
+    table(border="1")
+      thead
+        tr
+          th ISBN
+          th Title
+          th Publisher
+          th Established
+          th Author
+          th Category
+          th # Copies
+      tbody
+        each book in books
+          tr
+            each value in book
+              td #{value}

@@ -196,3 +196,35 @@ body.temporary-employees .content td {
   width: 40%;
   padding: 5px 10px;
 }
+
+/* --- Full Books list --- */
+body.books-list .content table {
+  width: 100%;
+  margin: auto
+}
+
+body.books-list .content th,
+body.books-list .content td {
+  padding: 5px 10px;
+}
+
+body.books-list .content th:last-child,
+body.books-list .content td:last-child {
+  text-align: center;
+}
+
+/* --- Books per Category --- */
+body.books-per-category .content table {
+  width: 50%;
+  margin: auto
+}
+
+body.books-per-category .content th,
+body.books-per-category .content td {
+  padding: 5px 10px;
+}
+
+body.books-per-category .content th:last-child,
+body.books-per-category .content td:last-child {
+  text-align: center;
+}
