@@ -458,7 +458,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = utf8 */;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50001 CREATE ALGORITHM=TEMPTABLE */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `BorrowedBooks` AS select `Book`.`Title` AS `title`,`Member`.`MFirst` AS `MFirst`,`Member`.`MLast` AS `MLast` from ((`Book` join `Borrows`) join `Member`) where ((`Book`.`ISBN` = `Borrows`.`ISBN`) and isnull(`Borrows`.`dateOfReturn`) and (`Member`.`memberID` = `Borrows`.`memberID`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
@@ -492,4 +492,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-18 17:45:42
+-- Dump completed on 2019-05-18 18:27:38
