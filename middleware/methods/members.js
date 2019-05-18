@@ -4,7 +4,7 @@ const myError = require('../errors');
 
 // Get Members
 const getMembers = () => {
-  console.log('Fetch Memberss');
+  console.log('Fetch Members');
   return Promise.try(() => {
     return mysql.queryAsync('SELECT * FROM Member;');
   }).then((res) => {
@@ -103,10 +103,35 @@ const updateMembers = (input) => {
       console.error('Failed to insert member ' + error);
       throw error;
     });
-  };
+};
+
+const deleteMembers = (input) => {
+    let errors = {}, errValues = {};
+    console.log('Deleting member');
+    return Promise.try(() => {
+        return mysql.queryAsync('SELECT * FROM Member WHERE memberID = ' + mysql.escape(input.member));
+    }).then((res) => {
+        if (res.length == 0) {
+            errors.MemberExists = true;
+            errValues.MemberExists = input.member;
+        }
+
+        if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
+            throw new myError('MALFORMED_INPUT', errors, errValues);
+        }
+
+        let query = 'DELETE FROM Member WHERE memberID = ' + mysql.escape(input.member);
+        console.log('Executing query: ' + query);
+        return mysql.queryAsync(query);
+    }).then((_res) => {
+        console.log('Member deleted successfully');
+        return;
+    })
+};
 
 module.exports = {
     getMembers,
     updateMembers,
-    insertMembers
+    insertMembers,
+    deleteMembers
 };
