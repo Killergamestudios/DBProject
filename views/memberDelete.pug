@@ -6,7 +6,7 @@ block content
     p.delete-notice.alert-warning 
       | Deleting a Member might corrupt the Database. <br>
       | Please modify your data accordingly. This action is irreversable.
-    form(action="/member/delete", method="post")
+    form(action="/members/delete", method="post")
       if error.messages
         span.alert-danger Something went wrong with the submission.
       div.form-group
