@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Borrowed Books
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Title
+          th Name
+      tbody
+        each book in brdBooks
+          tr
+            td #{book.Title} 
+            td #{book.MFirst} #{book.MLast}

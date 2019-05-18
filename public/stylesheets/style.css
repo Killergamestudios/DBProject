@@ -196,3 +196,14 @@ body.temporary-employees .content td {
   width: 40%;
   padding: 5px 10px;
 }
+
+body.Borrowed-Books .content table {
+  width: 40%;
+  margin: auto
+}
+
+body.Borrowed-Books .content th,
+body.Borrowed-Books .content td {
+  width: 40%;
+  padding: 5px 10px;
+}

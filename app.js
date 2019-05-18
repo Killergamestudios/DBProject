@@ -12,6 +12,7 @@ var booksRouter = require('./routes/books');
 var publisherRouter = require('./routes/publisher');
 var memberRouter = require('./routes/members');
 var tmpEmployeesRouter = require('./routes/tmpEmployees');
+var borrowedBooks = require('./routes/borrowedBooks');
 // Editable!!
 
 var app = express();
@@ -37,6 +38,7 @@ app.use('/books', booksRouter);
 app.use('/publisher',publisherRouter);
 app.use('/members',memberRouter);
 app.use('/tmpemployees', tmpEmployeesRouter)
+app.use('/borrowedBooks',borrowedBooks);
 // Editable!!
 
 // catch 404 and forward to error handler
