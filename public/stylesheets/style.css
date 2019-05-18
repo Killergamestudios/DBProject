@@ -228,3 +228,15 @@ body.books-per-category .content th:last-child,
 body.books-per-category .content td:last-child {
   text-align: center;
 }
+
+/* --- Borrowed Books View --- */
+body.Borrowed-Books .content table {
+  width: 40%;
+  margin: auto
+}
+
+body.Borrowed-Books .content th,
+body.Borrowed-Books .content td {
+  width: 40%;
+  padding: 5px 10px;
+}
