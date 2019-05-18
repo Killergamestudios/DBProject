@@ -12,11 +12,8 @@ var booksRouter = require('./routes/books');
 var publisherRouter = require('./routes/publisher');
 var memberRouter = require('./routes/members');
 var tmpEmployeesRouter = require('./routes/tmpEmployees');
-<<<<<<< HEAD
-var exploreRouter = require('./routes/explore')
-=======
 var borrowedBooks = require('./routes/borrowedBooks');
->>>>>>> dd66eed411d1a3da34dec5cfc99cf852a90380de
+var exploreRouter = require('./routes/explore');
 // Editable!!
 
 var app = express();
