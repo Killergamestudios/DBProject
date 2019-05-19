@@ -68,11 +68,30 @@ const getBooksPerPublisher = (input) =>{
     throw error;
   });
 };
+const getAvailableBooks = (input) =>{
+  console.log('Fetching Available Books');
+  return Promise.try(() => {
+    const query = `
+    SELECT R.Title , COUNT(R.copyNr) AS AvailableBooks FROM
+    (SELECT R2.Title , R2.copyNr FROM 
+      (SELECT BR.copyNr , BR.ISBN FROM Borrows AS BR WHERE BR.DateOfReturn IS NULL) AS R1 RIGHT JOIN
+      (SELECT B.Title,C.copyNr,B.ISBN FROM Book AS B INNER JOIN Copies AS C ON C.ISBN = B.ISBN) AS R2 ON R2.ISBN = R1.ISBN
+      AND R2.copyNr = R1.copyNr WHERE R1.ISBN IS NULL) AS R GROUP BY R.Title;`;
+    return mysql.queryAsync(query);
+  }).then((res) => {
+    console.log('Fetched Available Books successfully');
+    return { Abooks: res };
+  }).catch((error) => {
+    console.error('Failed to fetch Available Books' + error);
+    throw error;
+  });
+};
 
 
 
 module.exports = {
   getAllBooksDetails,
   getBooksPerCategory,
-  getBooksPerPublisher
+  getBooksPerPublisher,
+  getAvailableBooks
 };

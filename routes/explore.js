@@ -30,4 +30,13 @@ router.get('/books-per-publisher',function(req,res,next){
   });
 });
 
+router.get('/available-books',function(req,res,next){
+  methods.getAvailableBooks().then((result) => {
+    res.render('availableBooks',{
+      bodyClass: 'available-books',
+      Abooks: result.Abooks
+    })
+  });
+});
+
 module.exports = router;

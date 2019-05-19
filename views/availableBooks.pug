@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Available Books
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Title
+          th # of Available Copies
+      tbody
+        each book in Abooks
+          tr
+            each value in book
+              td #{value}
