@@ -9,27 +9,27 @@ block content
       div.form-group
         input.form-control#ISBN(type="text", name="ISBN", placeholder=" ", pattern="[0-9]{13}", 
           oninvalid="setCustomValidity('Must be 13 Numerical characters')",
-          onchange="try{setCustomValidity('')}catch(e){}")
+          onchange="try{setCustomValidity('')}catch(e){}" required)
         label.form-control-placeholder(for="ISBN") ISBN
         if error && error.messages && error.messages.ISBN
-          small.alert-danger.form-text ISBN #{error.values.ISBN} alreaedy exists
+          small.alert-danger.form-text ISBN '#{error.values.ISBN}' alreaedy exists
       div.form-group
-        input.form-control#Title(type="text", name="Title", placeholder=" ")
+        input.form-control#Title(type="text", name="Title", placeholder=" ", required)
         label.form-control-placeholder(for="Title") Book Title
       div.form-group
-        input.form-control#NumPages.form-number(type="number", name="NumPages", min="0", max="10000", placeholder=" ")
+        input.form-control#NumPages.form-number(type="number", name="NumPages", min="0", max="10000", placeholder=" ", required)
         label.form-control-placeholder(for="NumPages") Number of Pages
         small.form-text.text-muted Can be from 0 to 10000
       div.form-group
-        select#pubName.form-control(name="pubName")
+        select#pubName.form-control(name="pubName" required)
           option(value="" selected) -- Choose publisher --
           each publisher in publishers
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, 
               | #{publisher.Street} #{publisher.Number}, #{publisher.PostalCode}
-        if error && error.messages && error.messages.BookExists
-          small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exist.
+        if error && error.messages && error.messages.PublisherExists
+          small.alert-danger.form-text Publisher '#{error.values.PublisherExists}' does not exist.
       div.form-group
-        input#pubYear.form-control(type="number", name="pubYear", min="0", max=year, placeholder=" ")
+        input#pubYear.form-control(type="number", name="pubYear", min="0", max=year, placeholder=" ", required)
         label.form-control-placeholder(for="pubYear") Year of Publication
         small.form-text.text-muted Can be from 0 to #{year}
       div.form-group

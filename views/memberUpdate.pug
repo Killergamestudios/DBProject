@@ -12,31 +12,25 @@ block content
             option(value=member.memberID) #{member.memberID}, #{member.MFirst} #{member.MLast}, 
               | #{member.Street} #{member.Number}, #{member.PostalCode}, #{member.MBirthDate}
         if error && error.messages && error.messages.memberExists
-          small.alert-danger.form-text Member #{error.values.memberExists} does not exist.
+          small.alert-danger.form-text Member '#{error.values.memberExists}' does not exist.
       div.form-group
-        input.form-control#memberID(type="text", name="memberID", placeholder=" ")
-        label.form-control-placeholder(for="memberID") Member ID
-        if error && error.messages && error.messages.memberID
-          small.alert-danger.form-text memberID #{error.value} already exists
-      div.form-group
-        input.form-control#MFirst(type="text", name="MFirst", placeholder=" ")
+        input.form-control#MFirst(type="text", name="MFirst", maxlength="40", placeholder=" ")
         label.form-control-placeholder(for="MFirst") First Name
       div.form-group
-        input.form-control#MLast(type="text", name="MLast", placeholder=" ")
+        input.form-control#MLast(type="text", name="MLast", maxlength="40", placeholder=" ")
         label.form-control-placeholder(for="MLast") Last Name
       div.form-group
-        input.form-control#Street(type="text", name="Street", placeholder=" ")
+        input.form-control#Street(type="text", name="Street", maxlength="50", placeholder=" ")
         label.form-control-placeholder(for="Street") Member's Address street
       div.form-group
-        input.form-control#Number(type="number", name="Number", placeholder=" ")
+        input.form-control#Number(type="number", name="Number", min="0", max="100000", placeholder=" ")
         label.form-control-placeholder(for="Number") Member's Address Number
+        small.form-text.text-muted Can be from 1 to 100000
       div.form-group
-        input.form-control#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
-          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
-          onchange="try{setCustomValidity('')}catch(e){}")
+        input.form-control#PostalCode(type="text", name="PostalCode", maxlength="10", placeholder=" ")
         label.form-control-placeholder(for="PostalCode") Member's Postal Code
       div.form-group
         input.form-control#MBirthDate(type="date", name="MBirthDate", placeholder=" ")
-        label.form-control-placeholder(for="MBirthDate") Member's Birthday (YYYY-MM-DD)
+        label.form-control-placeholder(for="MBirthDate") Member's Birthday
       div.form-group
         input.form-control(type="submit", value="Submit")

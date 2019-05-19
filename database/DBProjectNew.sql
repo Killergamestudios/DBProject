@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `Book`;
 CREATE TABLE `Book` (
   `ISBN` varchar(13) NOT NULL,
   `Title` text CHARACTER SET utf8,
-  `PubYear` year(4) DEFAULT NULL,
+  `PubYear` int(5) unsigned DEFAULT NULL,
   `NumPages` int(5) unsigned DEFAULT NULL,
   `pubName` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`ISBN`),
@@ -329,9 +329,9 @@ DROP TABLE IF EXISTS `Publisher`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Publisher` (
   `pubName` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `estYear` year(4) DEFAULT NULL,
+  `estYear` int(5) unsigned DEFAULT NULL,
   `Street` tinytext CHARACTER SET utf8,
-  `Number` int(4) unsigned DEFAULT NULL,
+  `Number` int(6) unsigned DEFAULT NULL,
   `PostalCode` tinytext,
   PRIMARY KEY (`pubName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

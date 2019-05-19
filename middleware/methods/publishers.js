@@ -16,14 +16,14 @@ const getPublishers = () => {
 };
 
 const updatePublisher = (input) => {
-  let errors = {}, values = {};
+  let errors = {}, errValues = {};
   console.log('Update Publisher');
   return Promise.try(() => {
-    return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.pubName));
+    return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.publisher));
   }).then((res) => {
     if (res.length == 0) {
       errors.PublisherExists = true;
-      errValues.PublisherExists = input.pubName;
+      errValues.PublisherExists = input.publisher;
     }
     
     return mysql.queryAsync(
@@ -33,11 +33,11 @@ const updatePublisher = (input) => {
   }).then((res) => {
     if (res.length != 0) {
       errors.pubName = true;
-      values.pubName = input.pubName;
+      errValues.pubName = input.pubName;
     }  
     
     if (Object.entries(errors).length !== 0 && errors.constructor === Object) {
-      throw new myError('MALFORMED_INPUT', errors, values);
+      throw new myError('MALFORMED_INPUT', errors, errValues);
     }
 
     let sub = '';

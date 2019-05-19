@@ -7,23 +7,23 @@ block content
       if error
         span.alert-danger Something went wrong with the submission.  
       div.form-group
-        input.form-control#pubName(type="text", name="pubName", placeholder=" ")
+        input.form-control#pubName(type="text", name="pubName", placeholder=" ", required)
         label.form-control-placeholder(for="pubName") Publisher Name
         if error && error.messages && error.messages.pubName
-          small.alert-danger.form-text Publisher Name #{error.values.pubName} alreaedy exists
+          small.alert-danger.form-text Publisher Name '#{error.values.pubName}' alreaedy exists
       div.form-group
-        input.form-control#estYear.from-number(type="number", name="estYear", placeholder=" ")
-        label.form-control-placeholder(for="estYear") Publisher Year of Establishment 
+        input.form-control#estYear.from-number(type="number", name="estYear", min="0", max=year, placeholder=" ", required)
+        label.form-control-placeholder(for="estYear") Publisher Year of Establishment
+        small.form-text.text-muted Can be from 0 to #{year} 
       div.form-group
-        input.form-control#Street(type="text", name="Street", placeholder=" ")
+        input.form-control#Street(type="text", name="Street", maxlength="50", placeholder=" ", required)
         label.form-control-placeholder(for="Street") Publisher Adress Street
       div.form-group
-        input.form-control#Number.from-number(type="number", name="Number", placeholder=" ")
+        input.form-control#Number.from-number(type="number", name="Number",min="0", max="100000", placeholder=" ", required)
         label.form-control-placeholder(for="Number") Publisher Adress Number
+        small.form-text.text-muted Can be from 1 to 100000
       div.form-group
-        input.form-control#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
-          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
-          onchange="try{setCustomValidity('')}catch(e){}")
+        input.form-control#PostalCode(type="text", name="PostalCode", maxlength="10", placeholder=" ", required)
         label.form-control-placeholder(for="PostalCode") Publisher Postal Code
       div.form-group
         input.form-control(type="submit", value="Submit")

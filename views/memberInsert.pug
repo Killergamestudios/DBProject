@@ -9,27 +9,27 @@ block content
       div.form-group
         input.form-control#memberID(type="text", name="memberID", placeholder=" ")
         label.form-control-placeholder(for="memberID") Member ID
+        small.form-text.text-muted Optional
         if error && error.messages && error.messages.memberID
-          small.alert-danger.form-text Member ID #{error.values.memberID} already exists
+          small.alert-danger.form-text Member ID '#{error.values.memberID}' already exists
       div.form-group
-        input.form-control#MFirst(type="text", name="MFirst", placeholder=" ")
+        input.form-control#MFirst(type="text", name="MFirst", maxlength="40", placeholder=" ", required)
         label.form-control-placeholder(for="MFirst") First Name
       div.form-group
-        input.form-control#MLast(type="text", name="MLast", placeholder=" ")
+        input.form-control#MLast(type="text", name="MLast", maxlength="40", placeholder=" ", required)
         label.form-control-placeholder(for="MLast") Last Name
       div.form-group
-        input.form-control#Street(type="text", name="Street", placeholder=" ")
+        input.form-control#Street(type="text", name="Street", maxlength="50", placeholder=" ", required)
         label.form-control-placeholder(for="Street") Member's Address street
       div.form-group
-        input.form-control#Number(type="number", name="Number", placeholder=" ")
+        input.form-control#Number(type="number", name="Number", min="0", max="100000", placeholder=" ", required)
         label.form-control-placeholder(for="Number") Member's Address Number
+        small.form-text.text-muted Can be from 1 to 100000
       div.form-group
-        input.form-control#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
-          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
-          onchange="try{setCustomValidity('')}catch(e){}")
+        input.form-control#PostalCode(type="text", name="PostalCode", maxlength="10", placeholder=" ", required)
         label.form-control-placeholder(for="PostalCode") Member's Postal Code
       div.form-group
-        input.form-control#MBirthDate(type="date", name="MBirthDate", placeholder=" ")
-        label.form-control-placeholder(for="MBirthDate") Member's Birthday (YYYY-MM-DD)
+        input.form-control#MBirthDate(type="date", name="MBirthDate", placeholder=" ", required)
+        label.form-control-placeholder(for="MBirthDate") Member's Birthday
       div.form-group
         input.form-control(type="submit", value="Submit")       

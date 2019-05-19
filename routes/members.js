@@ -3,7 +3,6 @@ var methods = require('../middleware/methods/members');
 var router = express.Router();
 const Promise = require('bluebird');
 
-
 router.get('/update', function(req, res, next) {
   methods.getMembers().then((result) => {
     res.render('memberUpdate', { 
@@ -13,11 +12,13 @@ router.get('/update', function(req, res, next) {
   })
 });
 
-
-
 router.post('/update', function(req, res, next) {
   methods.updateMembers(req.body).then((result) => {
-    res.render('thankyou', { bodyClass: 'member-update' });
+    res.render('thankyou', {
+      bodyClass: 'thankyou',
+      link: '/members/update',
+      text: 'Update another member'
+    });
   }).catch((error) => {
     console.log(error);
     methods.getMembers().then((result) => {
@@ -32,59 +33,65 @@ router.post('/update', function(req, res, next) {
 });
 
 router.get('/insert', function(req, res, next) {
+  methods.getMembers().then((result) => {
+    res.render('memberInsert', 
+      {
+        bodyClass: 'member-insert',
+        members: result.members
+      });
+  });
+});
+  
+router.post('/insert', function(req, res, next) {
+  methods.insertMembers(req.body).then((result) => {
+    res.render('thankyou', {
+      bodyClass: 'thankyou',
+      link: '/members/insert',
+      text: 'Insert another member'
+    });
+  }).catch((error) => {
+    console.log(error);
     methods.getMembers().then((result) => {
       res.render('memberInsert', 
-        {
-          bodyClass: 'member-insert',
-          members: result.members
+        { 
+          bodyClass: 'member-insert', 
+          members: result.members, 
+          error: error
         });
     });
-});
-
-  
-  router.post('/insert', function(req, res, next) {
-    methods.insertMembers(req.body).then((result) => {
-      res.render('thankyou', { bodyClass: 'thankyou' });
-    }).catch((error) => {
-      console.log(error);
-      methods.getMembers().then((result) => {
-        res.render('memberInsert', 
-          { 
-            bodyClass: 'member-insert', 
-            members: result.members, 
-            error: error
-          });
-      });
-    });
+  });
 });
 
 /* Member Delete GET */
 router.get('/delete', function (req, res, next) {
-    methods.getMembers().then((result) => {
-        res.render('memberDelete',
-            {
-                bodyClass: 'member-delete',
-                members: result.members,
-                error: {}
-            });
-    });
+  methods.getMembers().then((result) => {
+    res.render('memberDelete',
+      {
+        bodyClass: 'member-delete',
+        members: result.members,
+        error: {}
+      });
+  });
 });
 
 /* Member Delete POST */
 router.post('/delete', function (req, res, next) {
-    methods.deleteMembers(req.body).then(() => {
-        res.render('thankyou', { bodyClass: 'thankyou' });
-    }).catch((error) => {
-        console.log(error);
-        methods.getMembers().then((result) => {
-            res.render('memberDelete',
-                {
-                    bodyClass: 'member-delete',
-                    members: result.members,
-                    error: error
-                });
+  methods.deleteMembers(req.body).then(() => {
+    res.render('thankyou', {
+      bodyClass: 'thankyou',
+      link: '/members/delete',
+      text: 'Delete another member'});
+  }).catch((error) => {
+    console.log(error);
+    methods.getMembers().then((result) => {
+      res.render('memberDelete',
+        {
+          bodyClass: 'member-delete',
+          members: result.members,
+          error: error
         });
     });
+  });
 });
 
 module.exports = router;

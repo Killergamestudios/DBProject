@@ -4,7 +4,7 @@ block content
   h1 Members Delete
   div.container
     p.delete-notice.alert-warning 
-      | Deleting a Member might corrupt the Database. <br>
+      | Deleting a Member will result in deleting all entries associated with this member.
       | Please modify your data accordingly. This action is irreversable.
     form(action="/members/delete", method="post")
       if error.messages

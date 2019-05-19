@@ -15,6 +15,6 @@ block content
           each publisher in publishers
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, #{publisher.Street} ,#{publisher.Number}, #{publisher.PostalCode}
         if error && error.messages && error.messages.PublisherExists
-          small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exist.
+          small.alert-danger.form-text Publisher '#{error.values.PublisherExists}' does not exist.
       div.form-group
         input.form-control(type="submit", value="Submit")
