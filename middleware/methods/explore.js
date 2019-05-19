@@ -58,7 +58,13 @@ const getBooksPerPublisher = (input) =>{
   console.log('Fetching books per publisher');
   return Promise.try(() => {
     const query = `
-    SELECT R.pubName, COUNT(R.Title) FROM (SELECT P.pubName , B.Title FROM Publisher AS P LEFT JOIN Book AS B ON P.pubName = B.pubName) AS R GROUP BY R.pubName ORDER BY R.pubName DESC;`;
+    SELECT R.pubName, COUNT(R.Title)
+    FROM
+    (SELECT P.pubName , B.Title
+    FROM Publisher AS P 
+    LEFT JOIN Book AS B ON P.pubName = B.pubName) AS R 
+    GROUP BY R.pubName 
+    ORDER BY R.pubName DESC;`;
     return mysql.queryAsync(query);
   }).then((res) => {
     console.log('Fetched books per publisher successfully');
@@ -68,15 +74,20 @@ const getBooksPerPublisher = (input) =>{
     throw error;
   });
 };
+
 const getAvailableBooks = (input) =>{
   console.log('Fetching Available Books');
   return Promise.try(() => {
     const query = `
     SELECT R.Title , COUNT(R.copyNr) AS AvailableBooks FROM
     (SELECT R2.Title , R2.copyNr FROM 
-      (SELECT BR.copyNr , BR.ISBN FROM Borrows AS BR WHERE BR.DateOfReturn IS NULL) AS R1 RIGHT JOIN
-      (SELECT B.Title,C.copyNr,B.ISBN FROM Book AS B INNER JOIN Copies AS C ON C.ISBN = B.ISBN) AS R2 ON R2.ISBN = R1.ISBN
-      AND R2.copyNr = R1.copyNr WHERE R1.ISBN IS NULL) AS R GROUP BY R.Title;`;
+      (SELECT BR.copyNr , BR.ISBN 
+      FROM Borrows AS BR WHERE BR.DateOfReturn IS NULL) AS R1 
+    RIGHT JOIN 
+      (SELECT B.Title,C.copyNr,B.ISBN
+      FROM Book AS B 
+      INNER JOIN Copies AS C ON C.ISBN = B.ISBN) AS R2 ON R2.ISBN = R1.ISBN AND R2.copyNr = R1.copyNr WHERE R1.ISBN IS NULL) AS R 
+    GROUP BY R.Title;`;
     return mysql.queryAsync(query);
   }).then((res) => {
     console.log('Fetched Available Books successfully');
