@@ -21,5 +21,13 @@ router.get('/books-per-category', function(req, res, next) {
   });
 });
 
+router.get('/books-per-publisher',function(req,res,next){
+  methods.getBooksPerPublisher().then((result) => {
+    res.render('booksPerPublisher',{
+      bodyClass: 'books-per-publisher',
+      publishers: result.publishers
+    })
+  });
+});
 
 module.exports = router;

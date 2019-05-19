@@ -54,7 +54,25 @@ const getBooksPerCategory = (input) => {
   });
 };
 
+const getBooksPerPublisher = (input) =>{
+  console.log('Fetching books per publisher');
+  return Promise.try(() => {
+    const query = `
+    SELECT R.pubName, COUNT(R.Title) FROM (SELECT P.pubName , B.Title FROM Publisher AS P LEFT JOIN Book AS B ON P.pubName = B.pubName) AS R GROUP BY R.pubName ORDER BY R.pubName DESC;`;
+    return mysql.queryAsync(query);
+  }).then((res) => {
+    console.log('Fetched books per publisher successfully');
+    return { publishers: res };
+  }).catch((error) => {
+    console.error('Failed to fetch books per publisher ' + error);
+    throw error;
+  });
+};
+
+
+
 module.exports = {
   getAllBooksDetails,
-  getBooksPerCategory
+  getBooksPerCategory,
+  getBooksPerPublisher
 };
