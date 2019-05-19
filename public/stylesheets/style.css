@@ -289,6 +289,25 @@ body.books-per-category .content td:last-child {
   text-align: center;
 }
 
+body.books-per-publisher .content table {
+  width: 50%;
+  margin: auto
+}
+
+body.books-per-publisher .content th,
+body.books-per-publisher .content td {
+  padding: 5px 10px;
+}
+
+body.books-per-publisher .content th:last-child,
+body.books-per-publisher .content td:last-child {
+  text-align: center;
+}
+
+
+
+
+
 /* --- Borrowed Books View --- */
 body.Borrowed-Books .content table {
   width: 40%;

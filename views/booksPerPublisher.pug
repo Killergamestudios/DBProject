@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Books Per Publisher
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Publisher
+          th # of Books
+      tbody
+        each publisher in publishers
+          tr
+            each value in publisher
+              td #{value}
