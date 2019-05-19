@@ -11,26 +11,26 @@ block content
           option(value="" selected) -- Choose publisher to edit --
           each publisher in publishers
             option(value=publisher.pubName) #{publisher.pubName}, #{publisher.estYear}, #{publisher.Street} , #{publisher.Number}, #{publisher.PostalCode}
-        if error && error.messages && error.messages.BookExists
-          small.alert-danger.form-text Publisher #{error.values.PublisherExists} does not exist.
+        if error && error.messages && error.messages.PublisherExists
+          small.alert-danger.form-text Publisher '#{error.values.PublisherExists}' does not exist.
       div.form-group
-        input.form-control#pubName(type="text", name="pubName", placeholder=" ")
+        input.form-control#pubName(type="text", name="pubName", maxlength="50", placeholder=" ")
         label.form-control-placeholder(for="pubName") Publisher Name
         if error && error.messages && error.messages.pubName
-          small.alert-danger.form-text pubName #{error.value} alreaedy exists
+          small.alert-danger.form-text Publisher '#{error.values.pubName}' alreaedy exists
       div.form-group
-        input.form-control#estYear(type="number", name="estYear", placeholder=" ")
-        label.form-control-placeholder(for="estYear") publisher year of establishment
+        input.form-control#estYear(type="number", name="estYear", min="0", max=year, placeholder=" ")
+        label.form-control-placeholder(for="estYear") Publisher year of establishment
+        small.form-text.text-muted Can be from 0 to #{year}
       div.form-group
-        input.form-control#Street(type="text", name="Street", placeholder=" ")
+        input.form-control#Street(type="text", name="Street", maxlength="50", placeholder=" ")
         label.form-control-placeholder(for="Street") Publisher Address street
       div.form-group
-        input.form-control#Number(type="number", name="Number", placeholder=" ")
+        input.form-control#Number(type="number", name="Number", min="0", max="100000", placeholder=" ")
         label.form-control-placeholder(for="Number") Publisher Address Number
+        small.form-text.text-muted Can be from 1 to 100000
       div.form-group
-        input.form-control#PostalCode(type="text", name="PostalCode", placeholder=" ",pattern="[0-9]{5}", 
-          oninvalid="setCustomValidity('Must be 5 Numerical characters')",
-          onchange="try{setCustomValidity('')}catch(e){}")
+        input.form-control#PostalCode(type="text", name="PostalCode", maxlength="10", placeholder=" ")
         label.form-control-placeholder(for="PostalCode") Publisher Postal Code
       div.form-group
         input.form-control(type="submit", value="Submit")       

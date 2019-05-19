@@ -9,6 +9,11 @@ const getBooks = () => {
     return mysql.queryAsync('SELECT * FROM Book;');
   }).then((res) => {
     console.log('Fetched Books successfully');
+    for (const key in res) {
+      if (res[key].Title.length > 50) {
+        res[key].Title = res[key].Title.substr(0,50) + "...";
+      }
+    }
     return { books: res };
   }).catch((error) => {
     console.error('Failed to fetch books' + error);
@@ -30,7 +35,7 @@ const updateBooks = (input) => {
 
     return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.pubName));
   }).then((res) => {
-    if (res.length == 0 && pubName != '') {
+    if (res.length == 0 && input.pubName != '') {
       errors.PublisherExists = true;
       errValues.PublisherExists = input.pubName;
     }

@@ -7,7 +7,8 @@ const Promise = require('bluebird');
 router.get('/update', function(req, res, next) {
   methods.getPublishers().then((result) => {
     res.render('publisherUpdate', { 
-      bodyClass: 'publisher-update', 
+      bodyClass: 'publisher-update',
+      year: new Date().getFullYear(),
       publishers: result.publishers
     });
   })
@@ -17,13 +18,18 @@ router.get('/update', function(req, res, next) {
 
 router.post('/update', function(req, res, next) {
   methods.updatePublisher(req.body).then((result) => {
-    res.render('thankyou', { bodyClass: 'publisher-update' });
+    res.render('thankyou', { 
+      bodyClass: 'publisher-update',
+      link: '/publisher/update',
+      text: 'Update another publisher'
+    });
   }).catch((error) => {
     console.log(error);
     methods.getPublishers().then((result) => {
       res.render('publisherUpdate', 
         { 
-          bodyClass: 'publisher-update', 
+          bodyClass: 'publisher-update',
+          year: new Date().getFullYear(),
           publishers: result.publishers,  
           error: error
         });
@@ -36,6 +42,7 @@ router.get('/insert', function(req, res, next) {
     res.render('publisherInsert', 
       {
         bodyClass: 'publisher-insert',
+        year: new Date().getFullYear(),
         publishers: result.publishers
       });
   });
@@ -43,14 +50,19 @@ router.get('/insert', function(req, res, next) {
 
 router.post('/insert', function(req, res, next) {
   methods.insertPublishers(req.body).then((result) => {
-    res.render('thankyou', { bodyClass: 'thankyou' });
+    res.render('thankyou', { 
+      bodyClass: 'thankyou',
+      link: '/publisher/insert',
+      text: 'Add another publisher'
+    });
   }).catch((error) => {
     console.log(error);
     methods.getPublishers().then((result) => {
       res.render('publisherInsert', 
         { 
           bodyClass: 'publisher-insert', 
-          publishers: result.publishers, 
+          publishers: result.publishers,
+          year: new Date().getFullYear(),
           error: error
         });
     });
@@ -71,7 +83,11 @@ router.get('/delete', function(req, res, next) {
 /* Publisher Delete POST */
 router.post('/delete', function(req, res, next) {
   methods.deletePublishers(req.body).then(() => {
-    res.render('thankyou', { bodyClass: 'thankyou' });
+    res.render('thankyou', { 
+      bodyClass: 'thankyou',
+      link: '/publisher/delete',
+      text: 'Delete another publisher'
+    });
   }).catch((error) => {
     console.log(error);
     methods.getPublishers().then((result) => {
@@ -84,8 +100,5 @@ router.post('/delete', function(req, res, next) {
     });
   });
 });
-
-
-
 
 module.exports = router;

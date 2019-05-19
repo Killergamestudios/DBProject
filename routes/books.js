@@ -22,7 +22,11 @@ router.get('/update', function(req, res, next) {
 /* Books Update POST */
 router.post('/update', function(req, res, next) {
   methodsBook.updateBooks(req.body).then(() => {
-    res.render('thankyou', { bodyClass: 'thankyou' });
+    res.render('thankyou', {
+      bodyClass: 'thankyou',
+      link: '/books/update',
+      text: 'Update another book'
+    });
   }).catch((error) => {
     console.log(error);
     methodsBook.getBooks().then((result) => {
@@ -55,7 +59,11 @@ router.get('/insert', function(req, res, next) {
 /* Books Insert POST */
 router.post('/insert', function(req, res, next) {
   methodsBook.insertBooks(req.body).then(() => {
-    res.render('thankyou', { bodyClass: 'thankyou' });
+    res.render('thankyou', {
+      bodyClass: 'thankyou',
+      link: '/books/insert',
+      text: 'Insert another book'
+    });
   }).catch((error) => {
     console.log(error);
     methodsPub.getPublishers().then((result) => {
@@ -84,7 +92,11 @@ router.get('/delete', function(req, res, next) {
 /* Books Delete POST */
 router.post('/delete', function(req, res, next) {
   methodsBook.deleteBooks(req.body).then(() => {
-    res.render('thankyou', { bodyClass: 'thankyou' });
+    res.render('thankyou', {
+      bodyClass: 'thankyou',
+      link: '/books/delete',
+      text: 'Delete another book'
+    });
   }).catch((error) => {
     console.log(error);
     methodsBook.getBooks().then((result) => {
