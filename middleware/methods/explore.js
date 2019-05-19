@@ -98,11 +98,31 @@ const getAvailableBooks = (input) =>{
   });
 };
 
+const getEmpLeaderboard = (input) => {
+    console.log('Fetching Available Employees');
+    return Promise.try(() => {
+        const query = `
+        SELECT Employees.*, COUNT(Reminders.empID) AS NumOfReminders
+        FROM Employees
+        LEFT JOIN Reminders ON Employees.empID = Reminders.empID
+        GROUP BY Reminders.empID
+        ORDER BY NumOfReminders DESC;`;
+        return mysql.queryAsync(query);
+    }).then((res) => {
+        console.log('Fetched Employees Leaderboard successfully');
+        return { Abooks: res };
+    }).catch((error) => {
+        console.error('Failed to fetch Employees Leaderboard ' + error);
+        throw error;
+    });
+};
+
 
 
 module.exports = {
   getAllBooksDetails,
   getBooksPerCategory,
   getBooksPerPublisher,
-  getAvailableBooks
+  getAvailableBooks,
+  getEmpLeaderboard
 };
