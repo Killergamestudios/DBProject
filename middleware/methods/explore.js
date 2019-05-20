@@ -136,6 +136,25 @@ const getTopBorrowers = (input) => {
     });
 };
 
+const getLast2MonthReminders = (input) => {
+    console.log("Fetching Last Two Month Reminders")
+    return Promise.try(() => {
+        const query = `
+        SELECT Reminder.dateOfBorrowing, CONCAT(Member.MFirst, " ", Member.MLast) AS Member,
+        Reminder.dateOfReminder FROM Member
+        LEFT JOIN Reminder ON Member.memberID = Reminder.memberID 
+        HAVING dateOfReminder > DATE_SUB(CURDATE(), INTERVAL 60 DAY)
+        ORDER BY dateOfReminder DESC`;
+        return mysql.queryAsync(query);
+    }).then((res) => {
+        console.log('Fetched Members Borrow List successfully');
+        return { l2mr: res };
+    }).catch((error) => {
+        console.error('Failed to fetch Members Borrow List ' + error);
+        throw error;
+    });
+};
+
 
 
 module.exports = {
@@ -144,5 +163,6 @@ module.exports = {
   getBooksPerPublisher,
   getAvailableBooks,
   getEmpLeaderboard,
-  getTopBorrowers
+  getTopBorrowers,
+  getLast2MonthReminders
 };

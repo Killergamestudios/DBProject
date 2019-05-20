@@ -1,0 +1,15 @@
+extends menu-layout
+block content
+  h1 Last Two Months Reminders
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Borrow Date
+          th Borrower
+		  th Reminder Date
+      tbody
+        each object in l2mr
+          tr
+            each value in object
+              td #{value}

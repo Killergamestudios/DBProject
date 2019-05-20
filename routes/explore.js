@@ -56,6 +56,14 @@ router.get('/top-borrowers', function (req, res, next) {
         })
     });
 });
+router.get('/l2mr', function (req, res, next) {
+    methods.getLast2MonthReminders().then((result) => {
+        res.render('last2MonthsReminders', {
+            bodyClass: 'l2mr',
+            l2mr: result.l2mr
+        })
+    });
+});
 
 
 module.exports = router;
