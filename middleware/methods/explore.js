@@ -102,10 +102,10 @@ const getEmpLeaderboard = (input) => {
     console.log('Fetching Available Employees');
     return Promise.try(() => {
         const query = `
-        SELECT Employee.*, COUNT(Reminder.empID) AS NumOfReminders
+        SELECT CONCAT(Employee.EFirst, " ", Employee.ELast) AS Employee, COUNT(Reminder.empID) AS NumOfReminders
         FROM Employee
         LEFT JOIN Reminder ON Employee.empID = Reminder.empID
-        GROUP BY Reminder.empID
+        GROUP BY Employee.empID
         ORDER BY NumOfReminders DESC;`;
         return mysql.queryAsync(query);
     }).then((res) => {
