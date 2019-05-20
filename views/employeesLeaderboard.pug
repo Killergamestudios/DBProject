@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Employees Leaderboard
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Employees
+          th # of Reminders
+      tbody
+        each employee in employees
+          tr
+            each value in employee
+              td #{value}
