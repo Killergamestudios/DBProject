@@ -110,7 +110,7 @@ const getEmpLeaderboard = (input) => {
         return mysql.queryAsync(query);
     }).then((res) => {
         console.log('Fetched Employees Leaderboard successfully');
-        return { Abooks: res };
+        return { aEmployees: res };
     }).catch((error) => {
         console.error('Failed to fetch Employees Leaderboard ' + error);
         throw error;
