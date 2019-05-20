@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Popular Authors
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Author Name
+          th Popularity
+      tbody
+        each author in authors
+          tr
+            each value in author
+              td #{value}

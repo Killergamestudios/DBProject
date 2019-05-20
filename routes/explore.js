@@ -39,4 +39,13 @@ router.get('/available-books',function(req,res,next){
   });
 });
 
+router.get('/popular-authors', function(req, res, next) {
+  methods.getPopularAuthors().then((result) => {
+    res.render('popularAuthors', {
+      bodyClass: 'popular-authors',
+      authors: result.authors
+    })
+  });
+});
+
 module.exports = router;
