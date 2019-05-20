@@ -43,7 +43,7 @@ router.get('/employees-leaderboard', function (req, res, next) {
     methods.getEmpLeaderboard().then((result) => {
         res.render('employeesLeaderboard', {
             bodyClass: 'employees-leaderboard',
-            Employees: result.Employees
+            aEmployees: result.aEmployees
         })
     });
 });
