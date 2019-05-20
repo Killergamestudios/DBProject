@@ -117,6 +117,25 @@ const getEmpLeaderboard = (input) => {
     });
 };
 
+const getTopBorrowers = (input) => {
+    console.log("Fetching Members Sorted by Borrows")
+    return Promise.try(() => {
+        const query = `
+        SELECT CONCAT(Member.MFirst, " ", Member.MLast) AS Member, COUNT(Borrows.memberID) AS NumOfBorrows
+        FROM Member
+        LEFT JOIN Borrows ON Member.memberID = Borrows.memberID
+        GROUP BY Member.memberID
+        ORDER BY NumOfBorrows DESC;`;
+        return mysql.queryAsync(query);
+    }).then((res) => {
+        console.log('Fetched Members Borrow List successfully');
+        return { memberB: res };
+    }).catch((error) => {
+        console.error('Failed to fetch Members Borrow List ' + error);
+        throw error;
+    });
+};
+
 
 
 module.exports = {
@@ -124,5 +143,6 @@ module.exports = {
   getBooksPerCategory,
   getBooksPerPublisher,
   getAvailableBooks,
-  getEmpLeaderboard
+  getEmpLeaderboard,
+  getTopBorrowers
 };

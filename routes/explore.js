@@ -48,4 +48,14 @@ router.get('/employees-leaderboard', function (req, res, next) {
     });
 });
 
+router.get('/top-borrowers', function (req, res, next) {
+    methods.getTopBorrowers().then((result) => {
+        res.render('topBorrowers', {
+            bodyClass: 'top-borrowers',
+            memberB: result.memberB
+        })
+    });
+});
+
+
 module.exports = router;
