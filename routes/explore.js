@@ -39,4 +39,12 @@ router.get('/available-books',function(req,res,next){
   });
 });
 
+router.get('/active-writers',function(req,res,next){
+  methods.getActiveWriters().then((result) => {
+    res.render('active-writers',{
+      bodyClass: 'active-writers',
+      AWriters: result.AWriters
+    })
+  });
+});
 module.exports = router;

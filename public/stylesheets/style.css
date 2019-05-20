@@ -319,6 +319,20 @@ body.available-books .content td:last-child {
   text-align: center;
 }
 
+body.active-writers .content table {
+  width: 50%;
+  margin: auto
+}
+
+body.active-writers .content th,
+body.active-writers .content td {
+  padding: 5px 10px;
+}
+
+body.active-writers .content th:last-child,
+body.active-writers .content td:last-child {
+  text-align: center;
+}
 
 /* --- Borrowed Books View --- */
 body.Borrowed-Books .content table {

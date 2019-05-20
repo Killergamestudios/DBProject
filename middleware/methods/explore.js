@@ -98,11 +98,27 @@ const getAvailableBooks = (input) =>{
   });
 };
 
-
+const getActiveWriters = (input) =>{
+  console.log('Fetching Active Writers');
+  return Promise.try(() => {
+    const query = `
+    SELECT CONCAT (R.AFirst , R.ALast) AS Name , COUNT(R.ISBN) AS C FROM (SELECT W.ISBN,A.AFirst,A.ALast,A.authID 
+      FROM WrittenBy AS W RIGHT JOIN Author AS A ON A.authID = W.authID) 
+      AS R GROUP BY R.authID HAVING C > 0 ORDER BY R.ALast;`;
+    return mysql.queryAsync(query);
+  }).then((res) => {
+    console.log('Fetched Active Writers successfully');
+    return { AWriters: res };
+  }).catch((error) => {
+    console.error('Failed to fetch Active Writers' + error);
+    throw error;
+  });
+};
 
 module.exports = {
   getAllBooksDetails,
   getBooksPerCategory,
   getBooksPerPublisher,
-  getAvailableBooks
+  getAvailableBooks,
+  getActiveWriters
 };
