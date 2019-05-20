@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Active Writers
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Name
+          th # of Books Written
+      tbody
+        each writer in AWriters
+          tr
+            each value in writer
+              td #{value}
