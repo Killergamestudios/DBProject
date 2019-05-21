@@ -1,7 +1,7 @@
 var mysql = require('../sql');
 const Promise = require('bluebird');
 
-const getAllBooksDetails = (input) => {
+const getAllBooksDetails = () => {
   console.log('Fetching books list');
   return Promise.try(() => {
     const query = 
@@ -35,7 +35,7 @@ const getAllBooksDetails = (input) => {
   })
 };
 
-const getBooksPerCategory = (input) => {
+const getBooksPerCategory = () => {
   console.log('Fetching books per category');
   return Promise.try(() => {
     const query = `
@@ -54,7 +54,7 @@ const getBooksPerCategory = (input) => {
   });
 };
 
-const getBooksPerPublisher = (input) =>{
+const getBooksPerPublisher = () =>{
   console.log('Fetching books per publisher');
   return Promise.try(() => {
     const query = `
@@ -75,7 +75,7 @@ const getBooksPerPublisher = (input) =>{
   });
 };
 
-const getAvailableBooks = (input) =>{
+const getAvailableBooks = () =>{
   console.log('Fetching Available Books');
   return Promise.try(() => {
     const query = `
@@ -156,6 +156,47 @@ const getLast2MonthReminders = (input) => {
 };
 
 
+const getPopularAuthors = () => {
+  console.log('Fetching popular authors');
+  return Promise.try(() => {
+    const query = `
+    SELECT CONCAT(AW.AFirst, " ", AW.ALast) AS Author, COUNT(BBr.ISBN) AS Popularity
+    FROM
+    (SELECT A.authID, A.AFirst, A.ALast, W.ISBN
+    FROM Author AS A
+    INNER JOIN WrittenBy AS W ON W.authID = A.authID) AS AW,
+    (SELECT B.ISBN
+    FROM Borrows As Br
+    INNER JOIN Book AS B ON Br.ISBN = B.ISBN) AS BBr
+    WHERE AW.ISBN = BBr.ISBN
+    GROUP BY AW.authID
+    ORDER BY Popularity DESC;`;
+    return mysql.queryAsync(query);
+  }).then((res) => {
+    console.log('Fetched popular authors successfully');
+    return { authors: res }
+  }).catch((error) => {
+    console.error('Failed to fetch popular authors ' + error);
+    throw error;
+  })
+}
+
+const getActiveWriters = (input) =>{
+  console.log('Fetching Active Writers');
+  return Promise.try(() => {
+    const query = `
+    SELECT CONCAT (R.AFirst , R.ALast) AS Name , COUNT(R.ISBN) AS C FROM (SELECT W.ISBN,A.AFirst,A.ALast,A.authID 
+      FROM WrittenBy AS W RIGHT JOIN Author AS A ON A.authID = W.authID) 
+      AS R GROUP BY R.authID HAVING C > 0 ORDER BY R.ALast;`;
+    return mysql.queryAsync(query);
+  }).then((res) => {
+    console.log('Fetched Active Writers successfully');
+    return { AWriters: res };
+  }).catch((error) => {
+    console.error('Failed to fetch Active Writers' + error);
+    throw error;
+  });
+};
 
 module.exports = {
   getAllBooksDetails,
@@ -164,5 +205,7 @@ module.exports = {
   getAvailableBooks,
   getEmpLeaderboard,
   getTopBorrowers,
-  getLast2MonthReminders
+  getLast2MonthReminders,
+  getPopularAuthors,
+  getActiveWriters
 };
