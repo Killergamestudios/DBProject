@@ -83,12 +83,16 @@ nav.navbar a.nav-link {
   cursor: pointer;
 }
 
+nav.navbar .dropdown-item {
+  padding: 0 1rem;
+}
+
 nav.navbar .dropdown-item.has-link {
   padding: 0;
 }
 
 nav.navbar .dropdown-item.has-link a {
-  padding: .75rem 2rem;
+  padding: .5rem 1.5rem;
 }
 
 nav.navbar .navbar-nav {
@@ -321,13 +325,22 @@ body.available-books .content td:last-child {
 
 
 body.popular-authors .content table,
-body.active-writers .content table {
+body.active-writers .content table,
+body.l2mr .content table,
+body.top-borrowers .content table,
+body.employees-leaderboard .content table {
   width: 50%;
   margin: auto
 }
 
 body.popular-authors .content th,
 body.popular-authors .content td,
+body.top-borrowers .content th,
+body.top-borrowers .content td,
+body.l2mr .content th,
+body.l2mr .content td,
+body.employees-leaderboard .content th,
+body.employees-leaderboard .content td,
 body.active-writers .content th,
 body.active-writers .content td {
   padding: 5px 10px;
@@ -336,7 +349,15 @@ body.active-writers .content td {
 body.popular-authors .content th:last-child,
 body.popular-authors .content td:last-child,
 body.active-writers .content th:last-child,
-body.active-writers .content td:last-child {
+body.active-writers .content td:last-child,
+body.top-borrowers .content th:last-child,
+body.top-borrowers .content td:last-child,
+body.l2mr .content th:last-child,
+body.l2mr .content td:last-child,
+body.l2mr .content th:first-child,
+body.l2mr .content td:first-child,
+body.employees-leaderboard .content th:last-child,
+body.employees-leaderboard .content td:last-child {
   text-align: center;
 }
 

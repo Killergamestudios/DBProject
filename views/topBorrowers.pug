@@ -1,0 +1,14 @@
+extends menu-layout
+block content
+  h1 Members Sorted by Borrows
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Members
+          th # of Borrows
+      tbody
+        each member in memberB
+          tr
+            each value in member
+              td #{value}

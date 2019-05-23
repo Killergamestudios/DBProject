@@ -39,6 +39,32 @@ router.get('/available-books',function(req,res,next){
   });
 });
 
+router.get('/employees-leaderboard', function (req, res, next) {
+    methods.getEmpLeaderboard().then((result) => {
+        res.render('employeesLeaderboard', {
+            bodyClass: 'employees-leaderboard',
+            aEmployees: result.aEmployees
+        })
+    });
+});
+
+router.get('/top-borrowers', function (req, res, next) {
+    methods.getTopBorrowers().then((result) => {
+        res.render('topBorrowers', {
+            bodyClass: 'top-borrowers',
+            memberB: result.memberB
+        })
+    });
+});
+router.get('/l2mr', function (req, res, next) {
+    methods.getLast2MonthReminders().then((result) => {
+        res.render('last2MonthsReminders', {
+            bodyClass: 'l2mr',
+            l2mr: result.l2mr
+        })
+    });
+});
+
 router.get('/popular-authors', function(req, res, next) {
   methods.getPopularAuthors().then((result) => {
     res.render('popularAuthors', {

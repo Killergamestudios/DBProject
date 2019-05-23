@@ -1,0 +1,16 @@
+extends menu-layout
+block content
+  h1 Last Two Months Reminders
+  div.content
+    table(border="1")
+      thead
+        tr
+          th Borrow Date
+          th Borrower
+          th Reminder Date
+      tbody
+        each object in l2mr
+          tr
+            td= object.dateOfBorrowing.getDate() + '/' + object.dateOfBorrowing.getMonth() + '/' + object.dateOfBorrowing.getYear()
+            td #{object.Member}
+            td= object.dateOfReminder.getDate() + '/' + object.dateOfReminder.getMonth() + '/' + object.dateOfReminder.getYear()

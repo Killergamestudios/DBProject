@@ -98,6 +98,64 @@ const getAvailableBooks = () =>{
   });
 };
 
+const getEmpLeaderboard = (input) => {
+    console.log('Fetching Available Employees');
+    return Promise.try(() => {
+        const query = `
+        SELECT CONCAT(Employee.EFirst, " ", Employee.ELast) AS Employee, COUNT(Reminder.empID) AS NumOfReminders
+        FROM Employee
+        LEFT JOIN Reminder ON Employee.empID = Reminder.empID
+        GROUP BY Employee.empID
+        ORDER BY NumOfReminders DESC;`;
+        return mysql.queryAsync(query);
+    }).then((res) => {
+        console.log('Fetched Employees Leaderboard successfully');
+        return { aEmployees: res };
+    }).catch((error) => {
+        console.error('Failed to fetch Employees Leaderboard ' + error);
+        throw error;
+    });
+};
+
+const getTopBorrowers = (input) => {
+    console.log("Fetching Members Sorted by Borrows")
+    return Promise.try(() => {
+        const query = `
+        SELECT CONCAT(Member.MFirst, " ", Member.MLast) AS Member, COUNT(Borrows.memberID) AS NumOfBorrows
+        FROM Member
+        LEFT JOIN Borrows ON Member.memberID = Borrows.memberID
+        GROUP BY Member.memberID
+        ORDER BY NumOfBorrows DESC;`;
+        return mysql.queryAsync(query);
+    }).then((res) => {
+        console.log('Fetched Members Borrow List successfully');
+        return { memberB: res };
+    }).catch((error) => {
+        console.error('Failed to fetch Members Borrow List ' + error);
+        throw error;
+    });
+};
+
+const getLast2MonthReminders = (input) => {
+    console.log("Fetching Last Two Month Reminders")
+    return Promise.try(() => {
+        const query = `
+        SELECT Reminder.dateOfBorrowing, CONCAT(Member.MFirst, " ", Member.MLast) AS Member,
+        Reminder.dateOfReminder FROM Member
+        LEFT JOIN Reminder ON Member.memberID = Reminder.memberID 
+        HAVING dateOfReminder > DATE_SUB(CURDATE(), INTERVAL 60 DAY)
+        ORDER BY dateOfReminder DESC`;
+        return mysql.queryAsync(query);
+    }).then((res) => {
+        console.log('Fetched Members Borrow List successfully');
+        return { l2mr: res };
+    }).catch((error) => {
+        console.error('Failed to fetch Members Borrow List ' + error);
+        throw error;
+    });
+};
+
+
 const getPopularAuthors = () => {
   console.log('Fetching popular authors');
   return Promise.try(() => {
@@ -127,7 +185,11 @@ const getActiveWriters = (input) =>{
   console.log('Fetching Active Writers');
   return Promise.try(() => {
     const query = `
+<<<<<<< HEAD
     SELECT CONCAT (R.AFirst , " " , R.ALast) AS Name , COUNT(R.ISBN) AS C FROM (SELECT W.ISBN,A.AFirst,A.ALast,A.authID 
+=======
+    SELECT CONCAT (R.AFirst, " " , R.ALast) AS Name , COUNT(R.ISBN) AS C FROM (SELECT W.ISBN,A.AFirst,A.ALast,A.authID 
+>>>>>>> 0e9d8381ae9330a97c90cfffdc9002677148d632
       FROM WrittenBy AS W RIGHT JOIN Author AS A ON A.authID = W.authID) 
       AS R GROUP BY R.authID HAVING C > 0 ORDER BY R.ALast;`;
     return mysql.queryAsync(query);
@@ -145,6 +207,9 @@ module.exports = {
   getBooksPerCategory,
   getBooksPerPublisher,
   getAvailableBooks,
+  getEmpLeaderboard,
+  getTopBorrowers,
+  getLast2MonthReminders,
   getPopularAuthors,
   getActiveWriters
 };
