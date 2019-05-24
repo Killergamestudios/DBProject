@@ -185,11 +185,7 @@ const getActiveWriters = (input) =>{
   console.log('Fetching Active Writers');
   return Promise.try(() => {
     const query = `
-<<<<<<< HEAD
-    SELECT CONCAT (R.AFirst , " " , R.ALast) AS Name , COUNT(R.ISBN) AS C FROM (SELECT W.ISBN,A.AFirst,A.ALast,A.authID 
-=======
-    SELECT CONCAT (R.AFirst, " " , R.ALast) AS Name , COUNT(R.ISBN) AS C FROM (SELECT W.ISBN,A.AFirst,A.ALast,A.authID 
->>>>>>> 0e9d8381ae9330a97c90cfffdc9002677148d632
+      SELECT CONCAT (R.AFirst , " " , R.ALast) AS Name , COUNT(R.ISBN) AS C FROM (SELECT W.ISBN,A.AFirst,A.ALast,A.authID 
       FROM WrittenBy AS W RIGHT JOIN Author AS A ON A.authID = W.authID) 
       AS R GROUP BY R.authID HAVING C > 0 ORDER BY R.ALast;`;
     return mysql.queryAsync(query);
