@@ -141,7 +141,6 @@ INSERT INTO `Borrows` VALUES (1,'9024586134986',1,'2019-04-01','2019-05-10'),(1,
 /*!40000 ALTER TABLE `Borrows` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8 */ ;
@@ -210,7 +209,7 @@ CREATE TABLE `Category` (
 
 LOCK TABLES `Category` WRITE;
 /*!40000 ALTER TABLE `Category` DISABLE KEYS */;
-INSERT INTO `Category` VALUES ('Action and Adventure',NULL),('Biography',NULL),('Comic Book',NULL),('Philosophy',NULL),('Science',NULL),('Fantasy','Action and Adventure'),('Autobiography','Biography'),('Manga','Comic book'),('Text Book','Science'),('Comedy',NULL);
+INSERT INTO `Category` VALUES ('Action and Adventure',NULL),('Biography',NULL),('Comedy',NULL),('Comic Book',NULL),('Philosophy',NULL),('Science',NULL),('Fantasy','Action and Adventure'),('Autobiography','Biography'),('Manga','Comic book'),('Text Book','Science');
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,8 +281,9 @@ CREATE TABLE `Member` (
   `PostalCode` tinytext,
   `MBirthDate` date DEFAULT NULL,
   `NumOfBorrowed` int(2) unsigned NOT NULL DEFAULT '0',
+  `BlackListed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`memberID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +292,7 @@ CREATE TABLE `Member` (
 
 LOCK TABLES `Member` WRITE;
 /*!40000 ALTER TABLE `Member` DISABLE KEYS */;
-INSERT INTO `Member` VALUES (1,'Αντώνιος','Βαλμάς','Σουλίου',6,'15235','1998-03-07',0),(2,'Παναγιώτης','Λουλάκης','Νερατζιωτίσσης',49,'14235','1998-08-18',0),(3,'Ισαβέλλα','Κουκουλά','28ης Οκτωβρίου',10,'14135','1998-08-04',0),(4,'Elon','Musk','Mars',9,'98765','1978-08-04',0),(5,'Μιχαήλ','Θοδώρου','Μουσικής',12,'12345','1998-05-04',0),(6,'Δημοσθένης','Κανιάρης','Δουκίσσης',17,15123,'1998-01-01',1),(7,'Παναγιώτης','Μιναϊδης','Πεύκης',4,15134,'1998-07-12',0),(8,'Χρίστος','Χριστοδούλου','Πεύκης',5,16789,'1998-08-04',0),(9,'Σάμι','Χαντζικαλήλ','Ηρακλείου',12,12345,'1998-04-26',0),(10,'Jason','Milionis','Αγίου Κωνσταντίνου',6,15124,'1998-06-29',0);
+INSERT INTO `Member` VALUES (1,'Αντώνιος','Βαλμάς','Σουλίου',6,'15235','1998-03-07',0,0),(2,'Παναγιώτης','Λουλάκης','Νερατζιωτίσσης',49,'14235','1998-08-18',0,0),(3,'Ισαβέλλα','Κουκουλά','28ης Οκτωβρίου',10,'14135','1998-08-04',0,0),(4,'Elon','Musk','Mars',9,'98765','1978-08-04',0,0),(5,'Μιχαήλ','Θοδώρου','Μουσικής',12,'12345','1998-05-04',0,0),(6,'Δημοσθένης','Κανιάρης','Δουκίσσης',17,'15123','1998-01-01',1,0),(7,'Παναγιώτης','Μιναϊδης','Πεύκης',4,'15134','1998-07-12',0,0),(8,'Χρίστος','Χριστοδούλου','Πεύκης',5,'16789','1998-08-04',0,0),(9,'Σάμι','Χαντζικαλήλ','Ηρακλείου',12,'12345','1998-04-26',0,0),(10,'Jason','Milionis','Αγίου Κωνσταντίνου',6,'15124','1998-06-29',0,0);
 /*!40000 ALTER TABLE `Member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,19 +433,19 @@ INSERT INTO `WrittenBy` VALUES ('9034686234786',1),('9024686234786',3),('9024686
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `tmpEmployees`
+-- Temporary table structure for view `largeMathBooks`
 --
 
-DROP TABLE IF EXISTS `tmpEmployees`;
-/*!50001 DROP VIEW IF EXISTS `tmpEmployees`*/;
+DROP TABLE IF EXISTS `largeMathBooks`;
+/*!50001 DROP VIEW IF EXISTS `largeMathBooks`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `tmpEmployees` AS SELECT 
- 1 AS `empID`,
- 1 AS `EFirst`,
- 1 AS `ELast`,
- 1 AS `Salary`,
- 1 AS `ContractNr`*/;
+/*!50001 CREATE VIEW `largeMathBooks` AS SELECT 
+ 1 AS `ISBN`,
+ 1 AS `Title`,
+ 1 AS `NumPages`,
+ 1 AS `PubYear`,
+ 1 AS `pubName`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -467,10 +467,10 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `tmpEmployees`
+-- Final view structure for view `largeMathBooks`
 --
 
-/*!50001 DROP VIEW IF EXISTS `tmpEmployees`*/;
+/*!50001 DROP VIEW IF EXISTS `largeMathBooks`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -479,7 +479,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `tmpEmployees` AS select `E`.`empID` AS `empID`,`E`.`EFirst` AS `EFirst`,`E`.`ELast` AS `ELast`,`E`.`Salary` AS `Salary`,`TE`.`ContractNr` AS `ContractNr` from (`Employee` `E` join `TemporaryEmployee` `TE`) where (`E`.`empID` = `TE`.`empID`) */;
+/*!50001 VIEW `largeMathBooks` AS select `B`.`ISBN` AS `ISBN`,`B`.`Title` AS `Title`,`B`.`NumPages` AS `NumPages`,`B`.`PubYear` AS `PubYear`,`B`.`pubName` AS `pubName` from `Book` `B` where ((`B`.`NumPages` > 500) and (`B`.`Title` like '%Μαθηματ%')) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -493,4 +493,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-18 18:27:38
+-- Dump completed on 2019-05-24 19:28:16

@@ -250,14 +250,14 @@ form small.alert-danger {
 }
 
 /* --- Temporary Employees View --- */
-body.temporary-employees .content table {
-  width: 50%;
+body.large-math-books .content table {
+  width: 80%;
   margin: auto
 }
 
-body.temporary-employees .content th,
-body.temporary-employees .content td {
-  width: 40%;
+body.large-math-books .content th,
+body.large-math-books .content td {
+  width: auto;
   padding: 5px 10px;
 }
 

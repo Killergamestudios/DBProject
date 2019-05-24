@@ -24,6 +24,12 @@ UPDATE Book
 SET pubName = 'Τζιόλα'
 WHERE pubName = 'Τζιόλας';
 
+CREATE VIEW largeMathBooks
+    AS
+        SELECT ISBN, Title, NumPages, PubYear, pubName
+        FROM Book AS B
+        WHERE B.NumPages > 500 AND B.Title LIKE '%Μαθηματ%';
+
 Author (
     authID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     AFirst TEXT(30) CHARACTER SET utf8,
@@ -106,12 +112,6 @@ TemporaryEmployee (
 
 INSERT INTO TemporaryEmployee (empID, ContractNr)
 VALUES ('10','189795413');
-
-CREATE VIEW tmpEmployees
-    AS
-        SELECT E.empID, EFirst, ELast, Salary, ContractNr
-        FROM Employee AS E, TemporaryEmployee AS TE
-        WHERE E.empID = TE.empID;
 
 Borrows (
     memberID INT(7) UNSIGNED, 

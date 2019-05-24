@@ -1,9 +1,8 @@
 extends menu-layout
-
 block content
-  h1 Books Update
+  h1 Large Math Books Update
   div.container
-    form(action="/books/update", method="post")
+    form(action="/largeMathBooks/update", method="post")
       if error
         span.alert-danger Something went wrong with the submission.
       div.form-group

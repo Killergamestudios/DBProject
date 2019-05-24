@@ -1,0 +1,20 @@
+extends menu-layout
+block content
+  h1 Large Math Books
+  div.content
+    table(border="1")
+      thead
+        tr
+          th ISBN
+          th Title
+          th Number of Pages
+          th Published
+          th Publisher
+      tbody
+        each book in books
+          tr
+            td #{book.ISBN} 
+            td #{book.Title} 
+            td #{book.NumPages}
+            td #{book.PubYear}
+            td #{book.pubName}
