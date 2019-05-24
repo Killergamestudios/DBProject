@@ -146,6 +146,11 @@ BEGIN
     UPDATE Member
     SET NumOfBorrowed = NumOfBorrowed - 1
     WHERE memberID = NEW.memberID;
+    IF (SELECT NumOfBorrowed FROM Member WHERE memberID = NEW.memberID) = 0 THEN
+        UPDATE Member
+        SET blackListed = false
+        WHERE memberID = NEW.memberID;
+    END IF;
   END IF;
 END;//
 
@@ -166,3 +171,13 @@ Reminder (
 
 INSERT INTO Reminder (empID, memberID, ISBN, copyNr, dateOfBorrowing, dateOfReminder)
 VALUES ('1','1','9031686234786','1','2017-01-01','2017-01-20');
+
+
+CREATE EVENT blackListMembers
+ON SCHEDULE EVERY 1 DAY
+STARTS '2000-01-01 00:00:00'
+DO
+    UPDATE Member SET blackListed = True
+    WHERE memberID IN (SELECT memberID FROM Borrows 
+    WHERE dateOfReturn IS NULL AND DATEDIFF(NOW(), dateOfBorrowing) >= 30);
+
