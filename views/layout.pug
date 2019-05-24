@@ -2,13 +2,24 @@ doctype html
 html
   head
     title= title
+    link(rel="shortcut icon" type="image/ico" href="/images/favicon.ico")
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
   body(class=bodyClass)
     block logo
       div.logo
-        img(src="/images/kgs.png", alt="KGS Logo")
+        a(href="/")
+          img(src="/images/logo.png", alt="KGS Logo")
       block menu
+    block banner
     div.main-container
       block content
+    block footer
+      footer
+        div.credits
+          div.footnote
+            span Copyright © 2019
+          div.copyright
+            span Created by KGS
+          

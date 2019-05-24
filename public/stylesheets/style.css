@@ -1,5 +1,6 @@
 div.main-container {
   padding: 30px 60px;
+  min-height: 80vh;
 }
 
 .main-container h1 {
@@ -15,23 +16,29 @@ div.main-container {
 
 /* ----LOGO---- */
 div.logo {
-  background-color: black;
   display: flex;
-  padding: 10px 0;
+  padding: 20px 0;
 }
-
-div.logo img {
+div.logo a {
+  display: block;
   margin: auto;
 }
 
-
 /* ----MENU---- */
+nav.navbar-light {
+  background-color: #4faee6;
+}
+
+nav.navbar-light .navbar-nav .nav-link {
+  color: black;
+}
+
 nav.navbar .dropdown-item:hover {
   background-color: #c5def7;
 }
 
 nav.navbar .dropdown-item.has-link:active {
-  background-color: #4ca5fd;
+  background-color: #4faee6;
 }
 
 nav.navbar li.dropdown:hover .dropdown-menu,
@@ -121,6 +128,10 @@ body.front .content th,
 body.front .content td {
   width: 50%;
   padding: 5px 10px;
+}
+
+body.front .news-banner img{
+  width: 100%;
 }
 
 /* ----FORMS---- */
@@ -371,4 +382,21 @@ body.Borrowed-Books .content th,
 body.Borrowed-Books .content td {
   width: 40%;
   padding: 5px 10px;
+}
+
+
+/* --- FOOTER --- */
+footer {
+  background-color: rgb(0, 10, 39);
+}
+
+footer .credits {
+  padding: 8px 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+footer div span {
+  font-size: 14px;
+  color:rgb(188, 203, 255);
 }

@@ -1,21 +1,24 @@
 extends menu-layout
+block banner
+  div.news-banner
+    img(src="/images/banner_180_years_ntua.jpg")
 
 block content
   div.content
-    h2 DataBase Project 2018 - 2019
-    table(border="1")
-      thead
-        tr
-          th Member
-          th Registration Number
-      tbody
-        tr 
-          td Antonios Valmas
-          td 03116134
-        tr 
-          td Panagiotis Loulakis
-          td 03116121
-        tr 
-          td Iosif-Georgios Panagiotopoulos 
-          td 03116063
+    h3 <b>New Features</b>
+    span New Explore Tabs added:
+    ul 
+      li <b>Popular Authors</b> <br>
+        small See the most wanted authors 
+      li <b>Available Books</b> <br>
+        small See what books are available for students to borrow
+      li <b>Employees LeaderBoard</b> <br>
+        small See the most active employees
+    p More to come soon...
+    h3 <b>New Arrivals</b>
+    ul
+      li Nektarios Koziris just released his new book: "How to teach pipeline to your nephew"
+      li Themistoklis Rassias released yet another 900pg book: Calculus I
+
+
 
