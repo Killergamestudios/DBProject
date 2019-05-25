@@ -19,6 +19,14 @@ const updateLargeMathBooksView = (input) => {
   let errors = {}, errValues = {};
   console.log('Update large math books');
   return Promise.try(() => {
+    let flag = true;
+    for (const key in input) {
+      if (key == 'book') continue;
+      if (input[key] !== '') flag = false;
+    }
+    if (flag) {
+      errors.nothingSubmitted = true;
+    }
     return mysql.queryAsync('SELECT * FROM largeMathBooks WHERE ISBN = '+ mysql.escape(input.book));
   }).then((res) => {
     if (res.length == 0) {

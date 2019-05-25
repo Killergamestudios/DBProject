@@ -25,6 +25,15 @@ const updateMembers = (input) => {
     let errors = {}, errValues = {};
     console.log('Update Members');
     return Promise.try(() => {
+      let flag = true;
+      for (const key in input) {
+        if (key == 'member') continue;
+        if (input[key] !== '') flag = false;
+      }
+      if (flag) {
+        errors.nothingSubmitted = true;
+      }
+
       return mysql.queryAsync('SELECT * FROM Member WHERE memberID = '+ mysql.escape(input.member));
     }).then((res) => {
       if (res.length == 0) {
@@ -109,7 +118,7 @@ const deleteMembers = (input) => {
     let errors = {}, errValues = {};
     console.log('Deleting member');
     return Promise.try(() => {
-        return mysql.queryAsync('SELECT * FROM Member WHERE memberID = ' + mysql.escape(input.member));
+      return mysql.queryAsync('SELECT * FROM Member WHERE memberID = ' + mysql.escape(input.member));
     }).then((res) => {
         if (res.length == 0) {
             errors.MemberExists = true;

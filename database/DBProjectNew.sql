@@ -77,7 +77,7 @@ DROP TABLE IF EXISTS `Book`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Book` (
   `ISBN` varchar(13) NOT NULL,
-  `Title` text CHARACTER SET utf8,
+  `Title` tinytext CHARACTER SET utf8,
   `PubYear` int(5) unsigned DEFAULT NULL,
   `NumPages` int(5) unsigned DEFAULT NULL,
   `pubName` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
@@ -176,14 +176,34 @@ DELIMITER ;;
 FOR EACH ROW
 BEGIN
   IF OLD.dateOfReturn IS NULL AND NEW.dateOfReturn IS NOT NULL THEN
-    UPDATE Member
+    UPDATE Member AS M
     SET NumOfBorrowed = NumOfBorrowed - 1
-    WHERE memberID = NEW.memberID;
-    IF (SELECT NumOfBorrowed FROM Member WHERE memberID = NEW.memberID) = 0 THEN
-        UPDATE Member
-        SET blackListed = false
-        WHERE memberID = NEW.memberID;
-    END IF;
+    WHERE memberID = OLD.memberID;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRiGGER unBlackList AFTER UPDATE ON Borrows
+FOR EACH ROW
+BEGIN
+  IF (SELECT COUNT(*) FROM Borrows
+  WHERE dateOfReturn IS NULL AND DATEDIFF(NOW(), dateOfBorrowing) >= 30 
+  AND memberID = OLD.memberID) = 0 THEN
+    UPDATE Member
+    SET blackListed = false
+    WHERE memberID = OLD.memberID;
   END IF;
 END */;;
 DELIMITER ;
@@ -498,4 +518,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-24 19:57:51
+-- Dump completed on 2019-05-25 19:26:11

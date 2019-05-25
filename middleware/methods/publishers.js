@@ -19,6 +19,14 @@ const updatePublisher = (input) => {
   let errors = {}, errValues = {};
   console.log('Update Publisher');
   return Promise.try(() => {
+    let flag = true;
+    for (const key in input) {
+      if (key == 'publisher') continue;
+      if (input[key] !== '') flag = false;
+    }
+    if (flag) {
+      errors.nothingSubmitted = true;
+    }
     return mysql.queryAsync('SELECT * FROM Publisher WHERE pubName = '+ mysql.escape(input.publisher));
   }).then((res) => {
     if (res.length == 0) {

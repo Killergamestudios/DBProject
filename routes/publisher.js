@@ -19,7 +19,7 @@ router.get('/update', function(req, res, next) {
 router.post('/update', function(req, res, next) {
   methods.updatePublisher(req.body).then((result) => {
     res.render('thankyou', { 
-      bodyClass: 'publisher-update',
+      bodyClass: 'thankyou',
       link: '/publisher/update',
       text: 'Update another publisher'
     });

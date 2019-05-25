@@ -6,6 +6,8 @@ block content
     form(action="/books/update", method="post")
       if error
         span.alert-danger Something went wrong with the submission.
+      if error && error.messages && error.messages.nothingSubmitted
+        span.alert-danger Please fill a field to update
       div.form-group
         select.form-control(name="book" required)
           option(value="" selected) -- Choose book to edit --
