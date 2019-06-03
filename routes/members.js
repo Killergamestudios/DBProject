@@ -4,10 +4,15 @@ var router = express.Router();
 const Promise = require('bluebird');
 
 router.get('/update', function(req, res, next) {
+  const date = new Date();
+  const month = ((date.getMonth() + 1) + '').padStart(2,'0');
+  const day = (date.getDate() + '').padStart(2,'0');
+  const currentDate = date.getFullYear() + '-' + month + '-' + day;
   methods.getMembers().then((result) => {
     res.render('memberUpdate', { 
       bodyClass: 'member-update', 
-      members: result.members
+      members: result.members,
+      date: currentDate
     });
   })
 });
@@ -21,23 +26,33 @@ router.post('/update', function(req, res, next) {
     });
   }).catch((error) => {
     console.log(error);
+    const date = new Date();
+    const month = ((date.getMonth() + 1) + '').padStart(2,'0');
+    const day = (date.getDate() + '').padStart(2,'0');
+    const currentDate = date.getFullYear() + '-' + month + '-' + day;
     methods.getMembers().then((result) => {
       res.render('memberUpdate', 
         { 
           bodyClass: 'member-update', 
           members: result.members,
-          error: error
+          error: error,
+          date: currentDate
         });
     });
   });
 });
 
 router.get('/insert', function(req, res, next) {
+  const date = new Date();
+  const month = ((date.getMonth() + 1) + '').padStart(2,'0');
+  const day = (date.getDate() + '').padStart(2,'0');
+  const currentDate = date.getFullYear() + '-' + month + '-' + day;
   methods.getMembers().then((result) => {
     res.render('memberInsert', 
       {
         bodyClass: 'member-insert',
-        members: result.members
+        members: result.members,
+        date: currentDate
       });
   });
 });
@@ -51,12 +66,17 @@ router.post('/insert', function(req, res, next) {
     });
   }).catch((error) => {
     console.log(error);
+    const date = new Date();
+    const month = ((date.getMonth() + 1) + '').padStart(2,'0');
+    const day = (date.getDate() + '').padStart(2,'0');
+    const currentDate = date.getFullYear() + '-' + month + '-' + day;
     methods.getMembers().then((result) => {
       res.render('memberInsert', 
         { 
           bodyClass: 'member-insert', 
           members: result.members, 
-          error: error
+          error: error,
+          date: currentDate
         });
     });
   });
